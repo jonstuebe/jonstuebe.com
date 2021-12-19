@@ -6,7 +6,7 @@ import readingTime from "reading-time";
 
 import { Fields, Note, Post } from "~/types";
 
-const dataDirectory = resolve(process.cwd(), "app/data");
+const dataDirectory = resolve(process.cwd(), "data");
 const postsDirectory = join(dataDirectory, "posts");
 const notesDirectory = join(dataDirectory, "notes");
 

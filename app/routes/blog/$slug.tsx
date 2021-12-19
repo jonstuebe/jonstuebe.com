@@ -7,16 +7,15 @@ import Layout from "~/components/Layout";
 import { Header } from "~/components/Header";
 import { PostImage } from "~/components/PostImage";
 
-import { getPostBySlug } from "~/lib/api";
 import { Post } from "~/types";
-import { BackToTop } from "~/components/BackToTop";
+import { getPostBySlug } from "~/lib/api";
 import markdownToHtml from "~/lib/markdownToHtml";
 
 export const meta: MetaFunction = () => {
   return {
     title: "Home | Jon Stuebe",
     description:
-      "Hi, my name is Jon. I make apps. I'm an UI Engineering Manager at SmartRent.",
+      "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.",
   };
 };
 
@@ -87,7 +86,6 @@ export default function Post() {
               __html: post.content,
             }}
           />
-          <BackToTop />
         </main>
         <Footer />
       </Layout>

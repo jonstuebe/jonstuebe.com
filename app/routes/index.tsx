@@ -14,7 +14,7 @@ export const meta: MetaFunction = () => {
   return {
     title: "Home | Jon Stuebe",
     description:
-      "Hi, my name is Jon. I make apps. I'm an UI Engineering Manager at SmartRent.",
+      "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.",
   };
 };
 
@@ -47,7 +47,7 @@ export default function Index() {
           I make apps
         </h1>
         <h2 className="text-2xl tracking-tight m-0 text-left max-w-2xl motion-safe:animate-text-in-slow select-none">
-          I'm an UI Engineering Manager at
+          I'm a Software Engineer at
           <a
             href="https://smartrent.com"
             target="_blank"
@@ -74,7 +74,7 @@ export default function Index() {
           </a>
         </h2>
         <section className="md:mt-36 mt-24 mb-24">
-          <h2 className="text-2xl leading-none tracking-tight m-0 text-left mb-4 select-none">
+          <h2 className="text-2xl leading-none tracking-tight m-0 text-left mb-4 select-none motion-safe:animate-fade-in">
             Recent Posts
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

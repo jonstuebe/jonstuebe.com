@@ -2,14 +2,12 @@ import { useLoaderData } from "remix";
 import type { MetaFunction, LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 
-import { Footer } from "~/components/Footer";
 import Layout from "~/components/Layout";
+import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 import { PostImage } from "~/components/PostImage";
 
 import { Post } from "~/types";
-import { getPostBySlug } from "~/lib/api";
-import markdownToHtml from "~/lib/markdownToHtml";
 
 export const meta: MetaFunction = () => {
   return {
@@ -29,22 +27,17 @@ export const loader: LoaderFunction = async ({ params }) => {
   }
 
   try {
-    const post = await getPostBySlug(params.slug, [
-      "title",
-      "date",
-      "slug",
-      "content",
-      "readingTime",
-      "summary",
-      "image",
-    ]);
+    const createClient = (await import("redis")).createClient;
+    const client = createClient({
+      url: process.env.REDIS_URL,
+    });
 
-    const content = await markdownToHtml(post.content || "");
+    await client.connect();
 
-    return {
-      ...post,
-      content,
-    };
+    const post = await client.hGetAll(`post:${params.slug}`);
+    await client.disconnect();
+
+    return post;
   } catch {
     throw new Response("Not Found", {
       status: 404,

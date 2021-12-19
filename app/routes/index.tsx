@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { Link, useLoaderData } from "remix";
 import type { MetaFunction, LoaderFunction } from "remix";
+
+import Layout from "~/components/Layout";
 import { Card } from "~/components/Card";
 import { Footer } from "~/components/Footer";
-
 import { Header } from "~/components/Header";
-import Layout from "~/components/Layout";
 
-import { getAllPosts } from "~/lib/api";
 import { Post } from "~/types";
 
 export const meta: MetaFunction = () => {
@@ -19,11 +18,37 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader: LoaderFunction = async () => {
-  const posts = (
-    await getAllPosts(["slug", "title", "date", "image", "readingTime"])
-  ).slice(0, 2);
+  const createClient = (await import("redis")).createClient;
+  const client = createClient({
+    url: process.env.REDIS_URL,
+  });
 
-  return posts;
+  await client.connect();
+
+  const cachedPosts = await client.keys("post:*");
+
+  const cmd = client.multi();
+  for (const cachedPostName of cachedPosts) {
+    cmd.hGetAll(cachedPostName);
+  }
+
+  const posts = (await cmd.exec()) as unknown as {
+    slug: string;
+    title: string;
+    date: string;
+    dateObj: string;
+    image: string;
+    readingTime: string;
+    summary: string;
+    content: string;
+    html: string;
+  }[];
+
+  await client.disconnect();
+
+  return posts
+    .sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1))
+    .slice(0, 2);
 };
 
 export default function Index() {

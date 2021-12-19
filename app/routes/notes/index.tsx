@@ -1,14 +1,12 @@
 import { useLoaderData } from "remix";
 import type { MetaFunction, LoaderFunction } from "remix";
-import { Footer } from "~/components/Footer";
 
-import { Header } from "~/components/Header";
 import Layout from "~/components/Layout";
+import { Footer } from "~/components/Footer";
+import { Header } from "~/components/Header";
 import { Note } from "~/components/Note";
 
-import { getAllNotes } from "~/lib/api";
 import type { Note as NoteType } from "~/types";
-import markdownToHtml from "~/lib/markdownToHtml";
 
 export const meta: MetaFunction = () => {
   return {
@@ -19,13 +17,35 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader: LoaderFunction = async () => {
-  let notes = await getAllNotes(["slug", "date", "content"]);
+  const createClient = (await import("redis")).createClient;
+  const client = createClient({
+    url: process.env.REDIS_URL,
+  });
 
-  for (const note of notes) {
-    note.content = await markdownToHtml(note.content || "");
+  await client.connect();
+
+  const cachedNotes = await client.keys("note:*");
+
+  const cmd = client.multi();
+  for (const cachedNoteName of cachedNotes) {
+    cmd.hGetAll(cachedNoteName);
   }
 
-  return notes;
+  const notes = (await cmd.exec()) as unknown as {
+    slug: string;
+    title: string;
+    date: string;
+    dateObj: string;
+    image: string;
+    readingTime: string;
+    summary: string;
+    content: string;
+    html: string;
+  }[];
+
+  await client.disconnect();
+
+  return notes.sort((note1, note2) => (note1.dateObj > note2.dateObj ? -1 : 1));
 };
 
 export default function Notes() {

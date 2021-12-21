@@ -1,5 +1,5 @@
 import { useLoaderData } from "remix";
-import type { MetaFunction, LoaderFunction } from "remix";
+import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
 
 import Layout from "~/components/Layout";
 import { Footer } from "~/components/Footer";
@@ -13,6 +13,12 @@ export const meta: MetaFunction = () => {
     title: "Notes | Jon Stuebe",
     description:
       "Hi, my name is Jon. Here's some notes of things I've learned recently.",
+  };
+};
+
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  return {
+    "Cache-Control": loaderHeaders.get("Cache-Control") ?? "max-age=43200",
   };
 };
 

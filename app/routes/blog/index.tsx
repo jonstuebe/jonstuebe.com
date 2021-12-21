@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "remix";
-import type { MetaFunction, LoaderFunction } from "remix";
+import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
 
 import Layout from "~/components/Layout";
 import { Card } from "~/components/Card";
@@ -13,6 +13,12 @@ export const meta: MetaFunction = () => {
     title: "Blog | Jon Stuebe",
     description:
       "Hi, my name is Jon. Here's some things I've learned recently.",
+  };
+};
+
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  return {
+    "Cache-Control": loaderHeaders.get("Cache-Control") ?? "max-age=43200",
   };
 };
 

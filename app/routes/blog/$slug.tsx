@@ -1,5 +1,5 @@
 import { useLoaderData } from "remix";
-import type { MetaFunction, LoaderFunction } from "remix";
+import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 
 import Layout from "~/components/Layout";
@@ -14,6 +14,12 @@ export const meta: MetaFunction = () => {
     title: "Home | Jon Stuebe",
     description:
       "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.",
+  };
+};
+
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  return {
+    "Cache-Control": loaderHeaders.get("Cache-Control") ?? "max-age=43200",
   };
 };
 

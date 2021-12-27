@@ -74,9 +74,8 @@ export const loader: LoaderFunction = async ({ params }) => {
       },
     });
   } catch (e: any) {
-    throw new Response("Not Found", {
-      status: 404,
-      statusText: e?.message ?? "",
+    throw new Response(e?.message ?? "Not Found", {
+      status: e?.message ? 400 : 404,
     });
   }
 };

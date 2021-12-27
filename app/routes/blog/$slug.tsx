@@ -19,7 +19,7 @@ export const meta: MetaFunction = ({ data, location }) => {
     "og:title": title,
     "og:description": description,
     "og:type": "article",
-    "og:image": data.url + "/social.jpg",
+    "og:image": data.url + "social.jpg",
   };
 };
 

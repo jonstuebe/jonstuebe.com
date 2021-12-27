@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-serverless";
 import { renderToString } from "react-dom/server";
 import type { HeadersFunction, LoaderFunction } from "remix";
 

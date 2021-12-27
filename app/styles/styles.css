@@ -1,6 +1,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background: linear-gradient(90deg, #000000, #020202, #040404, #060606);
+}
+
 .prose > h1 {
   @apply text-5xl lg:text-8xl tracking-tight lg:py-32 py-24 text-center motion-safe:animate-text-in-slow select-none;
 }

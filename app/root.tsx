@@ -38,7 +38,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="m-0 antialiased font-sans bg-black text-white scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-900 scrollbar-thumb-rounded-lg">
+      <body className="m-0 antialiased font-sans text-white scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-900 scrollbar-thumb-rounded-lg">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
@@ -59,7 +59,7 @@ export function CatchBoundary() {
         <Meta />
         <Links />
       </head>
-      <body className="m-0 antialiased font-sans bg-black text-white scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-900 scrollbar-thumb-rounded-lg">
+      <body className="m-0 antialiased font-sans text-white scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-900 scrollbar-thumb-rounded-lg">
         <Layout>
           <Header />
           <main>

@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import puppeteer from "puppeteer-serverless";
+import chromium from "chrome-aws-lambda";
 import { renderToString } from "react-dom/server";
 import type { HeadersFunction, LoaderFunction } from "remix";
 
@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     const post = await client.hGetAll(`post:${params.slug}`);
     await client.disconnect();
 
-    const browser = await puppeteer.launch({});
+    const browser = await chromium.puppeteer.launch({});
     const page = await browser.newPage();
 
     await page.setViewport({

@@ -1,6 +1,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.prose > h1 {
+  @apply text-5xl lg:text-8xl tracking-tight lg:py-32 py-24 text-center motion-safe:animate-text-in-slow select-none;
+}
+
 .prose h1 a,
 .prose h2 a,
 .prose h3 a,

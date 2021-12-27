@@ -45,7 +45,6 @@ module.exports = {
         DEFAULT: {
           css: {
             color: theme("colors.gray.400"),
-
             "ul, ol": {
               "li:before": {
                 display: "none",

@@ -10,11 +10,11 @@ const dataDirectory = resolve(process.cwd(), "data");
 const postsDirectory = join(dataDirectory, "posts");
 const notesDirectory = join(dataDirectory, "notes");
 
-export async function getPostSlugs() {
+async function getPostSlugs() {
   return fs.readdir(postsDirectory);
 }
 
-export async function getPostBySlug(
+async function getPostBySlug(
   slug: string,
   fields: Fields[] = []
 ): Promise<Record<Fields, string>> {
@@ -65,11 +65,11 @@ export async function getAllPosts(fields: Fields[] = []): Promise<Post[]> {
   return posts.sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1));
 }
 
-export async function getNoteSlugs() {
+async function getNoteSlugs() {
   return fs.readdir(notesDirectory);
 }
 
-export async function getNoteBySlug(
+async function getNoteBySlug(
   slug: string,
   fields: Fields[] = []
 ): Promise<Record<Fields, string>> {
@@ -112,40 +112,4 @@ export async function getAllNotes(fields: Fields[] = []): Promise<Note[]> {
   }
 
   return notes.sort((note1, note2) => (note1.dateObj > note2.dateObj ? -1 : 1));
-}
-
-const contentDirectory = join(process.cwd(), "content");
-
-export async function getContentBySlug(
-  slug: string,
-  fields: Fields[] = []
-): Promise<Record<Fields, string>> {
-  const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(contentDirectory, `${realSlug}.md`);
-  const fileContents = await fs.readFile(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
-
-  return fields.reduce((items, field) => {
-    if (field === "slug") {
-      items[field] = realSlug;
-      return items;
-    }
-    if (field === "content") {
-      items[field] = content;
-      return items;
-    }
-
-    if (field === "date") {
-      items.dateObj = data[field];
-      items[field] = format(parseISO(data[field]), "PPP");
-      return items;
-    }
-
-    if (data[field]) {
-      items[field] = data[field];
-      return items;
-    }
-
-    return items;
-  }, {} as Record<Fields, string>);
 }

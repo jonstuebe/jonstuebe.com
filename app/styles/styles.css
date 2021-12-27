@@ -1,6 +1,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 body {
   background: linear-gradient(90deg, #000000, #020202, #040404, #060606);
 }

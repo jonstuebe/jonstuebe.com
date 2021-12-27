@@ -12,6 +12,7 @@ export const meta: MetaFunction = ({ data, location }) => {
   const title = "Home | Jon Stuebe";
   const description =
     "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.";
+  const url = data.url as string;
 
   return {
     title,
@@ -19,7 +20,7 @@ export const meta: MetaFunction = ({ data, location }) => {
     "og:title": title,
     "og:description": description,
     "og:type": "article",
-    "og:image": data.url + "social.jpg",
+    "og:image": url.endsWith("/") ? url.slice(0, -1) : url + "/social.jpg",
   };
 };
 

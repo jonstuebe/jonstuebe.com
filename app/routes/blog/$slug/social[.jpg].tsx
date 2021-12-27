@@ -1,8 +1,7 @@
-import { promises as fs } from "fs";
-import path from "path";
 import { renderToString } from "react-dom/server";
 import type { HeadersFunction, LoaderFunction } from "remix";
 
+import tailwindUrl from "~/styles/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -11,7 +10,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   };
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     let chrome: any = { args: [] };
     let puppeteer;
@@ -56,16 +55,14 @@ export const loader: LoaderFunction = async ({ params }) => {
       </SocialCard>
     );
 
-    const css = await fs.readFile(
-      path.join(process.cwd(), "app/styles/tailwind.css"),
-      "utf8"
-    );
+    const { origin } = new URL(request.url);
+
+    const css = origin + tailwindUrl;
 
     await page.setContent(
-      `<html class="font-sans"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet" /><style>${css}</style></head><body>${html}</body></html>`
+      `<html class="font-sans"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet" /><link href="${css}" rel="stylesheet" /></head><body>${html}</body></html>`
     );
 
-    // await page.waitForTimeout(2000);
     const screenshot = await page.screenshot({ type: "jpeg", quality: 100 });
 
     return new Response(screenshot, {

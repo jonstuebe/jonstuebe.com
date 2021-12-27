@@ -8,7 +8,7 @@ import { PostImage } from "~/components/PostImage";
 
 import { Post } from "~/types";
 
-export const meta: MetaFunction = ({ data, location }) => {
+export const meta: MetaFunction = ({ data }) => {
   const title = "Home | Jon Stuebe";
   const description =
     "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.";

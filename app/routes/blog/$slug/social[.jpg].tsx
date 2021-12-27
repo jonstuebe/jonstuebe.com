@@ -73,9 +73,10 @@ export const loader: LoaderFunction = async ({ params }) => {
         "Content-Type": "image/jpeg",
       },
     });
-  } catch {
+  } catch (e: any) {
     throw new Response("Not Found", {
       status: 404,
+      statusText: e?.message ?? "",
     });
   }
 };

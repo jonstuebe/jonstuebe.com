@@ -1,6 +1,5 @@
 import { promises as fs } from "fs";
 import path from "path";
-import chromium from "chrome-aws-lambda";
 import { renderToString } from "react-dom/server";
 import type { HeadersFunction, LoaderFunction } from "remix";
 
@@ -14,6 +13,16 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 
 export const loader: LoaderFunction = async ({ params }) => {
   try {
+    let chrome: any = { args: [] };
+    let puppeteer;
+
+    if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+      chrome = require("chrome-aws-lambda");
+      puppeteer = require("puppeteer-core");
+    } else {
+      puppeteer = require("puppeteer");
+    }
+
     const createClient = (await import("redis")).createClient;
     const client = createClient({
       url: process.env.REDIS_URL,
@@ -24,7 +33,10 @@ export const loader: LoaderFunction = async ({ params }) => {
     const post = await client.hGetAll(`post:${params.slug}`);
     await client.disconnect();
 
-    const browser = await chromium.puppeteer.launch({});
+    const browser = await puppeteer.launch({
+      args: [...chrome.args, "--hide-scrollbars"],
+      executablePath: chrome ? await chrome.executablePath : undefined,
+    });
     const page = await browser.newPage();
 
     await page.setViewport({

@@ -8,11 +8,19 @@ import { PostImage } from "~/components/PostImage";
 
 import { Post } from "~/types";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ data }) => {
+  const title = "Home | Jon Stuebe";
+  const description =
+    "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.";
+  const url = data.url as string;
+
   return {
-    title: "Home | Jon Stuebe",
-    description:
-      "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.",
+    title,
+    description,
+    "og:title": title,
+    "og:description": description,
+    "og:type": "article",
+    "og:image": url.endsWith("/") ? url.slice(0, -1) : url + "/social.jpg",
   };
 };
 
@@ -22,7 +30,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   };
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   if (!params.slug) {
     throw new Response("Not Found", {
       status: 404,
@@ -40,7 +48,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     const post = await client.hGetAll(`post:${params.slug}`);
     await client.disconnect();
 
-    return post;
+    return { ...post, url: request.url };
   } catch {
     throw new Response("Not Found", {
       status: 404,

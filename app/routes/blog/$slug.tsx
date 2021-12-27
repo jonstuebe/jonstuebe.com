@@ -9,16 +9,12 @@ import { PostImage } from "~/components/PostImage";
 import { Post } from "~/types";
 
 export const meta: MetaFunction = ({ data }) => {
-  const title = "Home | Jon Stuebe";
-  const description =
-    "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.";
+  const { title } = data;
   const url = data.url as string;
 
   return {
     title,
-    description,
     "og:title": title,
-    "og:description": description,
     "og:type": "article",
     "og:image": url.endsWith("/") ? url.slice(0, -1) : url + "/social.jpg",
   };

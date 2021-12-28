@@ -52,14 +52,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     });
 
     const html = renderToString(
-      <SocialCard title={post.title} image={post.image}>
-        <h3 className="absolute m-0 p-0 text-6xl text-white opacity-80 bottom-14 left-8">
-          Jon Stuebe
-        </h3>
-        <h3 className="absolute m-0 p-0 text-white opacity-80 text-6xl bottom-14 right-8">
-          {post.readingTime}
-        </h3>
-      </SocialCard>
+      <SocialCard
+        title={post.title}
+        image={post.image}
+        readingTime={post.readingTime}
+      />
     );
 
     const { origin } = new URL(request.url);

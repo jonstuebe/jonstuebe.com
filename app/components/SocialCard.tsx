@@ -6,6 +6,7 @@ export interface SocialCardProps {
   image: string;
   imageDescription?: string;
   className?: string;
+  readingTime: string;
 }
 
 export const SocialCard: FC<SocialCardProps> = ({
@@ -13,7 +14,7 @@ export const SocialCard: FC<SocialCardProps> = ({
   image,
   imageDescription = "",
   className = "",
-  children,
+  readingTime,
 }) => {
   return (
     <div
@@ -41,7 +42,12 @@ export const SocialCard: FC<SocialCardProps> = ({
       <h2 className="relative text-white text-8xl leading-none tracking-tight text-center select-none w-3/4">
         {title}
       </h2>
-      {children}
+      <h3 className="absolute m-0 p-0 text-6xl text-white opacity-80 bottom-14 left-8">
+        Jon Stuebe
+      </h3>
+      <h3 className="absolute m-0 p-0 text-white opacity-80 text-6xl bottom-14 right-8">
+        {readingTime}
+      </h3>
     </div>
   );
 };

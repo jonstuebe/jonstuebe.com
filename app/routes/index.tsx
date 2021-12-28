@@ -48,11 +48,15 @@ export const loader: LoaderFunction = async () => {
     summary: string;
     content: string;
     html: string;
+    draft: string;
   }[];
 
   await client.disconnect();
 
   return posts
+    .filter((post) => {
+      return !post.draft ? true : false;
+    })
     .sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1))
     .slice(0, 2);
 };

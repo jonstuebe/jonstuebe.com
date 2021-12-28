@@ -1,5 +1,5 @@
 import { renderToString } from "react-dom/server";
-import type { HeadersFunction, LoaderFunction } from "remix";
+import { HeadersFunction, json, LoaderFunction } from "remix";
 
 import tailwindUrl from "~/styles/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
@@ -30,6 +30,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     await client.connect();
 
     const post = await client.hGetAll(`post:${params.slug}`);
+
+    if (post.draft) {
+      return json({});
+    }
+
     await client.disconnect();
 
     const browser = await puppeteer.launch({

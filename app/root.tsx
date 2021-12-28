@@ -9,8 +9,10 @@ import {
 } from "remix";
 import type { LinksFunction, MetaFunction } from "remix";
 
+import favicon from "./favicon.svg";
 import inter from "inter-ui/inter.css";
 import tailwindUrl from "./styles/tailwind.css";
+
 import Layout from "./components/Layout";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -21,6 +23,11 @@ export const meta: MetaFunction = () => {
 
 export const links: LinksFunction = () => {
   return [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: favicon,
+    },
     {
       rel: "stylesheet",
       href: inter,

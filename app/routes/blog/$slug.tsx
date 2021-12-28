@@ -1,4 +1,4 @@
-import { useLoaderData } from "remix";
+import { HtmlMetaDescriptor, useLoaderData } from "remix";
 import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
 
 import Layout from "~/components/Layout";
@@ -9,6 +9,8 @@ import { PostImage } from "~/components/PostImage";
 import { Post } from "~/types";
 
 export const meta: MetaFunction = ({ data }) => {
+  if (!data) return {} as HtmlMetaDescriptor;
+
   const { title } = data;
   const url = data.url as string;
 
@@ -43,6 +45,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     await client.connect();
 
     const post = await client.hGetAll(`post:${params.slug}`);
+
+    console.log(post);
+
+    if (post.draft) {
+      throw new Response("Not Found", {
+        status: 404,
+      });
+    }
+
     await client.disconnect();
 
     return { ...post, url: request.url };

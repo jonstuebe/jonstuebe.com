@@ -26,6 +26,7 @@ require("dotenv").config();
       "summary",
       "image",
       "dateObj",
+      "draft",
     ]);
   }
 
@@ -38,6 +39,7 @@ require("dotenv").config();
     "summary",
     "image",
     "dateObj",
+    "draft",
   ]);
 
   for (const post of posts) {
@@ -60,6 +62,7 @@ require("dotenv").config();
       "summary",
       "image",
       "dateObj",
+      "draft",
     ]);
   }
 
@@ -72,6 +75,7 @@ require("dotenv").config();
     "summary",
     "image",
     "dateObj",
+    "draft",
   ]);
 
   for (const note of notes) {

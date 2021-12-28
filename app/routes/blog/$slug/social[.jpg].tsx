@@ -42,12 +42,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       executablePath: chrome ? await chrome.executablePath : undefined,
     });
     const page = await browser.newPage();
-    const url = new URL(request.url);
-    const type = url.searchParams.get("type") ?? "facebook";
 
     await page.setViewport({
-      width: 1920,
-      height: type === "twitter" ? 1007 : 1080,
+      width: 2400,
+      height: 1256,
       deviceScaleFactor: 1,
     });
 
@@ -70,7 +68,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       }
     );
 
-    const screenshot = await page.screenshot({ type: "jpeg", quality: 100 });
+    const screenshot = await page.screenshot({ type: "jpeg", quality: 80 });
     await browser.close();
 
     return new Response(screenshot, {

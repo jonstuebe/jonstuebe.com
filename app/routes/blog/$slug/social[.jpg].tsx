@@ -60,7 +60,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const css = origin + tailwindUrl;
 
     await page.setContent(
-      `<html class="font-sans"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet" /><link href="${css}" rel="stylesheet" /></head><body>${html}</body></html>`
+      `<html class="font-sans"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet" /><link href="${css}" rel="stylesheet" /></head><body>${html}</body></html>`,
+      {
+        waitUntil: "networkidle0",
+      }
     );
 
     const screenshot = await page.screenshot({ type: "jpeg", quality: 100 });

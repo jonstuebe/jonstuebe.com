@@ -17,6 +17,7 @@ export const meta: MetaFunction = ({ data }) => {
     "og:title": title,
     "og:type": "article",
     "og:image": url.endsWith("/") ? url.slice(0, -1) : url + "/social.jpg",
+    "og:url": url,
   };
 };
 

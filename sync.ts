@@ -203,18 +203,18 @@ async function getChangedNotes(): Promise<string[]> {
 }
 
 (async () => {
-  if ((await getPostsFingerprints()) === null) {
-    await fingerprintPosts();
-  }
+  // if ((await getPostsFingerprints()) === null) {
+  //   await fingerprintPosts();
+  // }
 
   const changedPosts = await getChangedPosts();
   if (changedPosts.length === 0) {
     console.log(chalk.green("No Post Changes"));
   }
 
-  if ((await getNotesFingerprints()) === null) {
-    await fingerprintNotes();
-  }
+  // if ((await getNotesFingerprints()) === null) {
+  //   await fingerprintNotes();
+  // }
 
   const changedNotes = await getChangedNotes();
   if (changedNotes.length === 0) {
@@ -321,7 +321,6 @@ async function getChangedNotes(): Promise<string[]> {
       ...note,
       content: await markdownToHtml(note.content),
     });
-    console.log(chalk.green(`Caching Note: ${note.title}`));
   }
   await fingerprintNotes();
 

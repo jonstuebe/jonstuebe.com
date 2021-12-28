@@ -1,5 +1,4 @@
 import { createClient } from "redis";
-import { argv } from "process";
 import { encode } from "blurhash";
 import fprint from "fprint";
 import path from "path";
@@ -204,12 +203,6 @@ async function getChangedNotes(): Promise<string[]> {
 }
 
 (async () => {
-  const env = argv[2].replace("env=", "") ?? "dev";
-  const IS_DEV = env === "dev";
-
-  console.log(chalk.cyan(`ENV: ${env}`));
-  console.log();
-
   if ((await getPostsFingerprints()) === null) {
     await fingerprintPosts();
   }
@@ -229,7 +222,7 @@ async function getChangedNotes(): Promise<string[]> {
   }
 
   const client = createClient({
-    url: IS_DEV ? process.env.DEV_REDIS_URL : process.env.PROD_REDIS_URL,
+    url: process.env.REDIS_URL,
   });
 
   await client.connect();

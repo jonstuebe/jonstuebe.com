@@ -7,8 +7,7 @@
     "build": "npm run css:build && remix build",
     "dev": "node -r dotenv/config node_modules/.bin/remix dev",
     "postinstall": "remix setup node && patch-package",
-    "cache:dev": "node -r esbuild-register cache.ts env=dev",
-    "cache:prod": "node -r esbuild-register cache.ts env=prod",
+    "sync": "node -r esbuild-register sync.ts",
     "css:dev": "tailwindcss -i ./app/styles/styles.css -o ./app/styles/tailwind.css --config ./config/tailwind.js --watch",
     "css:build": "tailwindcss -i ./app/styles/styles.css -o ./app/styles/tailwind.css --config ./config/tailwind.js --minify"
   },

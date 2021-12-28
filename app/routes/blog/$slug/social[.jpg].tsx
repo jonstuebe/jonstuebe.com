@@ -71,6 +71,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     );
 
     const screenshot = await page.screenshot({ type: "jpeg", quality: 100 });
+    await browser.close();
 
     return new Response(screenshot, {
       headers: {

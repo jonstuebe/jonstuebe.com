@@ -1,21 +1,38 @@
 export default async function markdownToHtml(markdown: string) {
-  const remark = (await import("remark")).remark;
-  const html = (await import("remark-html")).default;
-  const externalLinks = (await import("remark-external-links")).default;
-  const prism = (await import("remark-prism")).default;
-  const slug = (await import("remark-slug")).default;
-  const headings = (await import("remark-autolink-headings")).default;
+  const [
+    { unified },
+    { default: html },
+    { default: externalLinks },
+    { default: prism },
+    { default: slug },
+    { default: headings },
+    { default: parse },
+    { default: stringify },
+  ] = await Promise.all([
+    import("unified"),
+    import("remark-html"),
+    import("remark-external-links"),
+    import("remark-prism"),
+    import("remark-slug"),
+    import("remark-autolink-headings"),
+    import("remark-parse"),
+    import("remark-stringify"),
+  ]);
 
-  const result = await remark()
+  const result = await unified()
+    .use(parse)
+    .use(stringify)
     .use(slug)
     .use(headings, {
       behavior: "append",
     })
     .use(externalLinks)
-    .use(html)
     // @ts-expect-error
     .use(prism, {
       transformInlineCode: true,
+    })
+    .use(html, {
+      sanitize: false,
     })
     .process(markdown);
 

@@ -13,13 +13,20 @@ export const meta: MetaFunction = ({ data }) => {
 
   const { title } = data;
   const url = data.url as string;
+  const socialImage = url.endsWith("/")
+    ? url.slice(0, -1)
+    : url + "/social.jpg";
 
   return {
     title,
     "og:title": title,
     "og:type": "article",
-    "og:image": url.endsWith("/") ? url.slice(0, -1) : url + "/social.jpg",
+    "og:image": socialImage,
     "og:url": url,
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@jonstuebe",
+    "twitter:title": title,
+    "twitter:image": socialImage,
   };
 };
 
@@ -46,9 +53,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
     const post = await client.hGetAll(`post:${params.slug}`);
 
-    console.log(post);
+    const url = new URL(request.url);
 
-    if (post.draft) {
+    if (post.draft && !url.searchParams.has("preview")) {
       throw new Response("Not Found", {
         status: 404,
       });

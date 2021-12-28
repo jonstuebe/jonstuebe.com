@@ -6,7 +6,8 @@ export type Fields =
   | "image"
   | "readingTime"
   | "summary"
-  | "content";
+  | "content"
+  | "draft";
 
 export type Post = Record<Fields, string>;
 export type Note = Record<Fields, string>;

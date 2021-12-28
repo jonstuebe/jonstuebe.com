@@ -1,4 +1,4 @@
-import { useLoaderData } from "remix";
+import { HtmlMetaDescriptor, useLoaderData } from "remix";
 import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
 
 import Layout from "~/components/Layout";
@@ -9,15 +9,24 @@ import { PostImage } from "~/components/PostImage";
 import { Post } from "~/types";
 
 export const meta: MetaFunction = ({ data }) => {
+  if (!data) return {} as HtmlMetaDescriptor;
+
   const { title } = data;
   const url = data.url as string;
+  const socialImage = url.endsWith("/")
+    ? url.slice(0, -1)
+    : url + "/social.jpg";
 
   return {
     title,
     "og:title": title,
     "og:type": "article",
-    "og:image": url.endsWith("/") ? url.slice(0, -1) : url + "/social.jpg",
+    "og:image": socialImage,
     "og:url": url,
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@jonstuebe",
+    "twitter:title": title,
+    "twitter:image": socialImage,
   };
 };
 
@@ -43,6 +52,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     await client.connect();
 
     const post = await client.hGetAll(`post:${params.slug}`);
+
+    const url = new URL(request.url);
+
+    if (post.draft && !url.searchParams.has("preview")) {
+      throw new Response("Not Found", {
+        status: 404,
+      });
+    }
+
     await client.disconnect();
 
     return { ...post, url: request.url };

@@ -26,7 +26,7 @@ export const meta: MetaFunction = ({ data }) => {
     "twitter:card": "summary_large_image",
     "twitter:creator": "@jonstuebe",
     "twitter:title": title,
-    "twitter:image": socialImage,
+    "twitter:image": socialImage + "?type=twitter",
   };
 };
 

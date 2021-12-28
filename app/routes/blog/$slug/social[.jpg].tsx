@@ -42,10 +42,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       executablePath: chrome ? await chrome.executablePath : undefined,
     });
     const page = await browser.newPage();
+    const url = new URL(request.url);
+    const type = url.searchParams.get("type") ?? "facebook";
 
     await page.setViewport({
       width: 1920,
-      height: 1080,
+      height: type === "twitter" ? 1003 : 1080,
       deviceScaleFactor: 1,
     });
 

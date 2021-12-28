@@ -7,7 +7,8 @@ export type Fields =
   | "readingTime"
   | "summary"
   | "content"
-  | "draft";
+  | "draft"
+  | "blurhash";
 
 export type Post = Record<Fields, string>;
 export type Note = Record<Fields, string>;

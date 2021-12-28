@@ -1,12 +1,22 @@
-import { FC, useMemo } from "react";
+import {
+  FC,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Blurhash, BlurhashCanvas } from "react-blurhash";
 
 export type Sizes = { minWidth: number; width: number }[];
 export type SrcSet = { src: string; width: number }[];
 
 export interface UnsplashImageProps {
   src: string;
+  blurhash: string;
   alt?: string;
   className?: string;
+  imageClassName?: string;
   imageSizes: Sizes;
 }
 
@@ -63,8 +73,10 @@ function unsplashToImageProps(
 
 export const UnsplashImage: FC<UnsplashImageProps> = ({
   src,
+  blurhash,
   alt,
   className,
+  imageClassName = "object-fit",
   imageSizes,
 }) => {
   const { srcset, sizes } = useMemo(() => {
@@ -72,13 +84,21 @@ export const UnsplashImage: FC<UnsplashImageProps> = ({
   }, [src]);
 
   return (
-    <img
-      src={src}
-      srcSet={srcset}
-      alt={alt}
-      sizes={sizes}
-      className={className}
-      decoding="async"
-    />
+    <div className={className}>
+      <BlurhashCanvas
+        hash={blurhash}
+        className={"absolute w-full h-full absolute-center"}
+      />
+      <img
+        src={src}
+        srcSet={srcset}
+        alt={alt}
+        sizes={sizes}
+        className={
+          "absolute w-full h-full absolute-center" + " " + imageClassName
+        }
+        decoding="async"
+      />
+    </div>
   );
 };

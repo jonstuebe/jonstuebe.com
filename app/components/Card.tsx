@@ -4,6 +4,7 @@ import { UnsplashImage } from "./UnplashImage";
 export interface CardProps {
   title: string;
   image: string;
+  blurhash: string;
   imageDescription?: string;
   className?: string;
 }
@@ -12,6 +13,7 @@ export const Card: FC<CardProps> = ({
   title,
   image,
   imageDescription = "",
+  blurhash,
   className = "",
   children,
 }) => {
@@ -25,17 +27,18 @@ export const Card: FC<CardProps> = ({
     >
       <UnsplashImage
         src={image}
+        blurhash={blurhash}
         alt={imageDescription}
         imageSizes={[
           { minWidth: 800, width: 700 },
           { minWidth: 500, width: 400 },
           { minWidth: 320, width: 250 },
         ]}
-        className="absolute absolute-center w-full h-full object-fit"
+        className="absolute w-full h-full absolute-center"
       />
-      <div className="bg-black opacity-50 w-full h-full absolute absolute-center pointer-events-none"></div>
-      <div className="opacity-20 bg-gradient-to-t from-black via-black to-transparent w-full h-1/2 absolute bottom-0 left-0 pointer-events-none"></div>
-      <h2 className="relative text-white text-4xl leading-none tracking-tight text-center select-none w-3/4">
+      <div className="absolute w-full h-full bg-black opacity-50 pointer-events-none absolute-center"></div>
+      <div className="absolute bottom-0 left-0 w-full pointer-events-none opacity-20 bg-gradient-to-t from-black via-black to-transparent h-1/2"></div>
+      <h2 className="relative w-3/4 text-4xl leading-none tracking-tight text-center text-white select-none">
         {title}
       </h2>
       {children}

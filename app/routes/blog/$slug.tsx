@@ -76,7 +76,7 @@ export default function Post() {
 
   return (
     <div className="w-full relative">
-      <PostImage image={post.image} />
+      <PostImage image={post.image} blurhash={post.blurhash} />
       <Layout className="relative z-10">
         <Header />
         <main>

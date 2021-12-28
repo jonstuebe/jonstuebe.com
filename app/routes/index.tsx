@@ -123,6 +123,7 @@ export default function Index() {
                   <Card
                     image={post.image}
                     title={post.title}
+                    blurhash={post.blurhash}
                     className="motion-safe:animate-fade-in"
                   >
                     <h3 className="absolute m-0 p-0 text-white opacity-80 text-base bottom-4 left-4">

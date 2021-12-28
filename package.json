@@ -4,10 +4,11 @@
   "description": "Personal site for Jon Stuebe",
   "license": "",
   "scripts": {
-    "build": "npm run css:build && npm run cache:content && remix build",
+    "build": "npm run css:build && remix build",
     "dev": "node -r dotenv/config node_modules/.bin/remix dev",
     "postinstall": "remix setup node && patch-package",
-    "cache:content": "node -r esbuild-register cache.ts",
+    "cache:dev": "node -r esbuild-register cache.ts env=dev",
+    "cache:prod": "node -r esbuild-register cache.ts env=prod",
     "css:dev": "tailwindcss -i ./app/styles/styles.css -o ./app/styles/tailwind.css --config ./config/tailwind.js --watch",
     "css:build": "tailwindcss -i ./app/styles/styles.css -o ./app/styles/tailwind.css --config ./config/tailwind.js --minify"
   },

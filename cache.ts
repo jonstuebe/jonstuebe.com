@@ -1,4 +1,5 @@
 import { createClient } from "redis";
+import { argv } from "process";
 import { encode } from "blurhash";
 import fprint from "fprint";
 import path from "path";
@@ -8,7 +9,7 @@ import { globbySync } from "globby";
 import fetch from "node-fetch";
 import sharp from "sharp";
 
-import { getAllNotes, getAllPosts, getNotes, getPosts } from "./lib/api";
+import { getNotes, getPosts } from "./lib/api";
 import markdownToHtml from "./lib/markdownToHtml";
 
 require("dotenv").config();
@@ -203,6 +204,12 @@ async function getChangedNotes(): Promise<string[]> {
 }
 
 (async () => {
+  const env = argv[2].replace("env=", "") ?? "dev";
+  const IS_DEV = env === "dev";
+
+  console.log(chalk.cyan(`ENV: ${env}`));
+  console.log();
+
   if ((await getPostsFingerprints()) === null) {
     await fingerprintPosts();
   }
@@ -222,7 +229,7 @@ async function getChangedNotes(): Promise<string[]> {
   }
 
   const client = createClient({
-    url: process.env.REDIS_URL,
+    url: IS_DEV ? process.env.DEV_REDIS_URL : process.env.PROD_REDIS_URL,
   });
 
   await client.connect();
@@ -268,7 +275,7 @@ async function getChangedNotes(): Promise<string[]> {
 
   for (const post of posts) {
     const blurhash = await encodeImageToBlurhash(post.image);
-
+    cmd.hDel(`post:${post.slug}`, ["draft"]);
     cmd.hSet(`post:${post.slug}`, {
       ...post,
       blurhash,

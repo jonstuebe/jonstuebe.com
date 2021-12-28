@@ -1,7 +1,7 @@
 ---
 title: Social Images With Remix
 date: "2021-12-28T16:07:02.733Z"
-image: https://source.unsplash.com/xv7-GlvBLFw/2550x1700
+image: https://source.unsplash.com/EQSPI11rf68/2834x1591
 ---
 
 ## How does it work?

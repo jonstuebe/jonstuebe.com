@@ -2,7 +2,6 @@
 title: Social Images With Remix
 date: "2021-12-28T16:07:02.733Z"
 image: https://source.unsplash.com/xv7-GlvBLFw/2550x1700
-draft: true
 ---
 
 ## How does it work?

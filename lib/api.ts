@@ -53,8 +53,10 @@ async function getPostBySlug(
   }, {} as Record<Fields, string>);
 }
 
-export async function getAllPosts(fields: Fields[] = []): Promise<Post[]> {
-  const slugs = await getPostSlugs();
+export async function getPosts(
+  slugs: string[],
+  fields: Fields[] = []
+): Promise<Post[]> {
   const posts: Post[] = [];
 
   for (const slug of slugs) {
@@ -63,6 +65,11 @@ export async function getAllPosts(fields: Fields[] = []): Promise<Post[]> {
   }
 
   return posts.sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1));
+}
+
+export async function getAllPosts(fields: Fields[] = []): Promise<Post[]> {
+  const slugs = await getPostSlugs();
+  return await getPosts(slugs, fields);
 }
 
 async function getNoteSlugs() {
@@ -103,13 +110,21 @@ async function getNoteBySlug(
   }, {} as Record<Fields, string>);
 }
 
-export async function getAllNotes(fields: Fields[] = []): Promise<Note[]> {
-  const slugs = await getNoteSlugs();
-  const notes: any[] = [];
+export async function getNotes(
+  slugs: string[],
+  fields: Fields[] = []
+): Promise<Note[]> {
+  const notes: Note[] = [];
+
   for (const slug of slugs) {
     const note = await getNoteBySlug(slug, fields);
     notes.push(note);
   }
 
   return notes.sort((note1, note2) => (note1.dateObj > note2.dateObj ? -1 : 1));
+}
+
+export async function getAllNotes(fields: Fields[] = []): Promise<Note[]> {
+  const slugs = await getNoteSlugs();
+  return await getNotes(slugs, fields);
 }

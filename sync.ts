@@ -10,6 +10,8 @@ import sharp from "sharp";
 
 import { getNotes, getPosts } from "./lib/api";
 import markdownToHtml from "./lib/markdownToHtml";
+import SpotifyWebApi from "spotify-web-api-node";
+import { TrackType } from "~/types";
 
 require("dotenv").config();
 
@@ -202,6 +204,33 @@ async function getChangedNotes(): Promise<string[]> {
   return changed;
 }
 
+async function getTopTracks(): Promise<TrackType[]> {
+  if (!process.env.SPOTIFY_ACCESS_TOKEN) {
+    throw new Error("SPOTIFY_ACCESS_TOKEN token required");
+  }
+
+  const spotify = new SpotifyWebApi();
+
+  spotify.setAccessToken(process.env.SPOTIFY_ACCESS_TOKEN as string);
+
+  const topTracks: TrackType[] = (
+    await spotify.getMyTopTracks({ limit: 10 })
+  ).body.items.map((item, idx) => ({
+    url: item.href.replace(
+      "api.spotify.com/v1/tracks/",
+      "open.spotify.com/track/"
+    ),
+    name: item.name,
+    artist: item.artists.map((artist) => artist.name).join(", "),
+    album: item.album.name,
+    image: item.album.images[0].url,
+    id: item.id,
+    index: idx,
+  }));
+
+  return topTracks;
+}
+
 (async () => {
   // if ((await getPostsFingerprints()) === null) {
   //   await fingerprintPosts();
@@ -324,6 +353,28 @@ async function getChangedNotes(): Promise<string[]> {
   }
   await fingerprintNotes();
 
+  const cachedTracks = await client.keys("music:topTracks:*");
+
+  for (const cachedTrack of cachedTracks) {
+    cmd.hDel(cachedTrack, [
+      "url",
+      "name",
+      "artist",
+      "album",
+      "image",
+      "id",
+      "index",
+    ]);
+  }
+
   await cmd.exec();
+
+  const topTracks = await getTopTracks();
+
+  for (const track of topTracks) {
+    await client.hSet(`music:topTracks:${track.id}`, track);
+  }
+  console.log(chalk.green("Updated Top Tracks"));
+
   await client.disconnect();
 })();

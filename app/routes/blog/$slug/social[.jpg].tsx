@@ -3,6 +3,7 @@ import { HeadersFunction, json, LoaderFunction } from "remix";
 
 import tailwindUrl from "~/styles/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
+import { getPuppeteer } from "~/utils/puppeteer";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
@@ -12,15 +13,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   try {
-    let chrome: any = { args: [] };
-    let puppeteer;
-
-    if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-      chrome = require("chrome-aws-lambda");
-      puppeteer = require("puppeteer-core");
-    } else {
-      puppeteer = require("puppeteer");
-    }
+    const { browser } = await getPuppeteer();
 
     const createClient = (await import("redis")).createClient;
     const client = createClient({
@@ -30,17 +23,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     await client.connect();
 
     const post = await client.hGetAll(`post:${params.slug}`);
+    await client.disconnect();
 
     if (post.draft) {
       return json({});
     }
 
-    await client.disconnect();
-
-    const browser = await puppeteer.launch({
-      args: [...chrome.args, "--hide-scrollbars"],
-      executablePath: chrome ? await chrome.executablePath : undefined,
-    });
     const page = await browser.newPage();
 
     await page.setViewport({

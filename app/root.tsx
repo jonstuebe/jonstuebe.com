@@ -18,7 +18,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+  return { title: "Jon Stuebe" };
 };
 
 export const links: LinksFunction = () => {

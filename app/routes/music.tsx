@@ -1,4 +1,9 @@
-import { HeadersFunction, LoaderFunction, MetaFunction } from "remix";
+import {
+  HeadersFunction,
+  HtmlMetaDescriptor,
+  LoaderFunction,
+  MetaFunction,
+} from "remix";
 import { useLoaderData } from "remix";
 
 import Layout from "~/components/Layout";
@@ -11,10 +16,22 @@ import { PostImage } from "~/components/PostImage";
 
 type LoaderData = {
   topTracks: TrackType[];
+  url: string;
 };
 
-export const meta: MetaFunction = () => {
-  return { title: "Jon Stuebe | Music" };
+export const meta: MetaFunction = ({ data }) => {
+  if (!data) return {} as HtmlMetaDescriptor;
+
+  const url = new URL(data.url);
+
+  url.pathname = "social.jpg";
+  url.searchParams.set("title", "Music");
+
+  return {
+    title: "Jon Stuebe | Music",
+    "og:image": url.href,
+    "twitter:image": url.href,
+  };
 };
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -23,7 +40,9 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   };
 };
 
-export const loader: LoaderFunction = async (): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<LoaderData> => {
   try {
     const createClient = (await import("redis")).createClient;
     const client = createClient({
@@ -49,10 +68,12 @@ export const loader: LoaderFunction = async (): Promise<LoaderData> => {
 
     return {
       topTracks,
+      url: request.url,
     };
   } catch (e) {
     return {
       topTracks: [],
+      url: request.url,
     };
   }
 };

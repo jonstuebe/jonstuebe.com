@@ -16,11 +16,20 @@ export const meta: MetaFunction = ({ data }) => {
   url.pathname = "social.jpg";
   url.searchParams.set("title", "Notes");
 
+  const title = "Notes | Jon Stuebe";
+  const description =
+    "Hi, my name is Jon. Here's some notes of things I've learned recently.";
+
   return {
-    title: "Notes | Jon Stuebe",
-    description:
-      "Hi, my name is Jon. Here's some notes of things I've learned recently.",
+    title,
+    description,
+    "og:title": title,
+    "og:type": "website",
     "og:image": url.href,
+    "og:url": data.url,
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@jonstuebe",
+    "twitter:title": title,
     "twitter:image": url.href,
   };
 };

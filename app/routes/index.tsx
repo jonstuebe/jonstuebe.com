@@ -17,11 +17,20 @@ export const meta: MetaFunction = ({ data }) => {
   url.pathname = "social.jpg";
   url.searchParams.set("title", "jonstuebe.com");
 
+  const title = "Home | Jon Stuebe";
+  const description =
+    "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.";
+
   return {
-    title: "Home | Jon Stuebe",
-    description:
-      "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.",
+    title,
+    description,
+    "og:title": title,
+    "og:type": "website",
     "og:image": url.href,
+    "og:url": data.url,
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@jonstuebe",
+    "twitter:title": title,
     "twitter:image": url.href,
   };
 };

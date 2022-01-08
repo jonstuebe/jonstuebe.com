@@ -17,6 +17,7 @@ export function Header() {
         <Link
           className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
           to="/blog"
+          prefetch="render"
         >
           blog
         </Link>
@@ -24,6 +25,7 @@ export function Header() {
         <Link
           className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
           to="/notes"
+          prefetch="render"
         >
           notes
         </Link>
@@ -31,6 +33,7 @@ export function Header() {
         <Link
           className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
           to="/music"
+          prefetch="render"
         >
           music
         </Link>

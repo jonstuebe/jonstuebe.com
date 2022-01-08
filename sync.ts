@@ -238,7 +238,7 @@ async function getTopTracks(): Promise<TrackType[]> {
 
   const changedPosts = await getChangedPosts();
   if (changedPosts.length === 0) {
-    console.log(chalk.green("No Post Changes"));
+    console.log(chalk.green("✅No Post Changes"));
   }
 
   // if ((await getNotesFingerprints()) === null) {
@@ -247,7 +247,7 @@ async function getTopTracks(): Promise<TrackType[]> {
 
   const changedNotes = await getChangedNotes();
   if (changedNotes.length === 0) {
-    console.log(chalk.green("No Note Changes"));
+    console.log(chalk.green("✅No Note Changes"));
   }
 
   const client = createClient({
@@ -303,7 +303,7 @@ async function getTopTracks(): Promise<TrackType[]> {
       blurhash,
       content: await markdownToHtml(post.content),
     });
-    console.log(chalk.green(`Caching Post: ${post.title}`));
+    console.log(chalk.green(`✅Caching Post: ${post.title}`));
   }
   await fingerprintPosts();
 
@@ -374,7 +374,7 @@ async function getTopTracks(): Promise<TrackType[]> {
   for (const track of topTracks) {
     await client.hSet(`music:topTracks:${track.id}`, track);
   }
-  console.log(chalk.green("Updated Top Tracks"));
+  console.log(chalk.green("✅Updated Top Tracks"));
 
   await client.disconnect();
 })();

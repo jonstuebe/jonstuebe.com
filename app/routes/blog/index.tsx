@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "remix";
+import { HtmlMetaDescriptor, Link, useLoaderData } from "remix";
 import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
 
 import Layout from "~/components/Layout";
@@ -8,11 +8,29 @@ import { Header } from "~/components/Header";
 
 import { Post } from "~/types";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ data }) => {
+  if (!data) return {} as HtmlMetaDescriptor;
+
+  const url = new URL(data.url);
+
+  url.pathname = "social.jpg";
+  url.searchParams.set("title", "Blog");
+
+  const title = "Blog | Jon Stuebe";
+  const description =
+    "Hi, my name is Jon. Here's some things I've learned recently.";
+
   return {
-    title: "Blog | Jon Stuebe",
-    description:
-      "Hi, my name is Jon. Here's some things I've learned recently.",
+    title,
+    description,
+    "og:title": title,
+    "og:type": "website",
+    "og:image": url.href,
+    "og:url": data.url,
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@jonstuebe",
+    "twitter:title": title,
+    "twitter:image": url.href,
   };
 };
 
@@ -22,7 +40,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   };
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
   const createClient = (await import("redis")).createClient;
   const client = createClient({
     url: process.env.REDIS_URL,
@@ -52,15 +70,18 @@ export const loader: LoaderFunction = async () => {
 
   await client.disconnect();
 
-  return posts
-    .filter((post) => {
-      return !post.draft ? true : false;
-    })
-    .sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1));
+  return {
+    posts: posts
+      .filter((post) => {
+        return !post.draft ? true : false;
+      })
+      .sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1)),
+    url: request.url,
+  };
 };
 
 export default function Posts() {
-  const posts = useLoaderData<Post[]>();
+  const { posts } = useLoaderData<{ posts: Post[] }>();
 
   return (
     <Layout>

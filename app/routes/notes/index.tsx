@@ -1,4 +1,4 @@
-import { useLoaderData } from "remix";
+import { HtmlMetaDescriptor, useLoaderData } from "remix";
 import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
 
 import Layout from "~/components/Layout";
@@ -8,11 +8,29 @@ import { Note } from "~/components/Note";
 
 import type { Note as NoteType } from "~/types";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ data }) => {
+  if (!data) return {} as HtmlMetaDescriptor;
+
+  const url = new URL(data.url);
+
+  url.pathname = "social.jpg";
+  url.searchParams.set("title", "Notes");
+
+  const title = "Notes | Jon Stuebe";
+  const description =
+    "Hi, my name is Jon. Here's some notes of things I've learned recently.";
+
   return {
-    title: "Notes | Jon Stuebe",
-    description:
-      "Hi, my name is Jon. Here's some notes of things I've learned recently.",
+    title,
+    description,
+    "og:title": title,
+    "og:type": "website",
+    "og:image": url.href,
+    "og:url": data.url,
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "@jonstuebe",
+    "twitter:title": title,
+    "twitter:image": url.href,
   };
 };
 
@@ -22,7 +40,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   };
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
   const createClient = (await import("redis")).createClient;
   const client = createClient({
     url: process.env.REDIS_URL,
@@ -51,11 +69,16 @@ export const loader: LoaderFunction = async () => {
 
   await client.disconnect();
 
-  return notes.sort((note1, note2) => (note1.dateObj > note2.dateObj ? -1 : 1));
+  return {
+    notes: notes.sort((note1, note2) =>
+      note1.dateObj > note2.dateObj ? -1 : 1
+    ),
+    url: request.url,
+  };
 };
 
 export default function Notes() {
-  const notes = useLoaderData<NoteType[]>();
+  const { notes } = useLoaderData<{ notes: NoteType[] }>();
 
   return (
     <Layout>

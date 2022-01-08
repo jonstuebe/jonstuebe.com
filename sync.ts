@@ -232,18 +232,10 @@ async function getTopTracks(): Promise<TrackType[]> {
 }
 
 (async () => {
-  // if ((await getPostsFingerprints()) === null) {
-  //   await fingerprintPosts();
-  // }
-
   const changedPosts = await getChangedPosts();
   if (changedPosts.length === 0) {
     console.log(chalk.green("✅No Post Changes"));
   }
-
-  // if ((await getNotesFingerprints()) === null) {
-  //   await fingerprintNotes();
-  // }
 
   const changedNotes = await getChangedNotes();
   if (changedNotes.length === 0) {

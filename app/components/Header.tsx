@@ -8,13 +8,6 @@ export function Header() {
       </Link>
       <nav className="flex space-x-4">
         <Link
-          className="hidden md:inline-flex text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
-          to="/"
-        >
-          home
-        </Link>
-
-        <Link
           className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
           to="/blog"
           prefetch="render"

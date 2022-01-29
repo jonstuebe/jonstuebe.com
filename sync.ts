@@ -214,7 +214,7 @@ async function getTopTracks(): Promise<TrackType[]> {
   spotify.setAccessToken(process.env.SPOTIFY_ACCESS_TOKEN as string);
 
   const topTracks: TrackType[] = (
-    await spotify.getMyTopTracks({ limit: 10 })
+    await spotify.getMyTopTracks({ limit: 10, time_range: "short_term" })
   ).body.items.map((item, idx) => ({
     url: item.href.replace(
       "api.spotify.com/v1/tracks/",

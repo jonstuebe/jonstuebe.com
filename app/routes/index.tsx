@@ -19,7 +19,7 @@ export const meta: MetaFunction = ({ data }) => {
 
   const title = "Home | Jon Stuebe";
   const description =
-    "Hi, my name is Jon. I make apps. I'm a Software Engineer at SmartRent.";
+    "Hi, my name is Jon. I make apps. I'm a Engineering Manager at SmartRent.";
 
   return {
     title,
@@ -103,7 +103,7 @@ export default function Index() {
           I make apps
         </h1>
         <h2 className="text-2xl tracking-tight m-0 text-left max-w-2xl motion-safe:animate-text-in-slow select-none">
-          I'm a Software Engineer at
+          I'm a Engineering Manager at
           <a
             href="https://smartrent.com"
             target="_blank"

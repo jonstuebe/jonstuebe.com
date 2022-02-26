@@ -1,5 +1,5 @@
 ---
-title: Next.js, Vite, and the future
+title: Next.js, Vite, And The Future
 summary: >-
 
 date: "2021-03-17T22:38:03.821Z"

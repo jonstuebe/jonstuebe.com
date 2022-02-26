@@ -1,5 +1,5 @@
 ---
-title: VSCode 1.49.1 case changing in regex replace
+title: VSCode 1.49.1 Case Changing In Regex Replace
 summary: >-
   I was looking through the VSCode 1.49.1 release notes and saw this cool new
   feature which allows you to do case changing in regex replace.

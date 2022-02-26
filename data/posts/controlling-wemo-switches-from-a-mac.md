@@ -1,5 +1,5 @@
 ---
-title: Controlling Wemo switches from a mac
+title: Controlling Wemo Switches From A Mac
 summary: >-
   So bit of a long intro, but I have a set of KRK audio monitors that I've had
   for years and love. However, they run into my computer through an audio

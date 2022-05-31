@@ -1,18 +1,12 @@
-import {
-  FC,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { Blurhash, BlurhashCanvas } from "react-blurhash";
+import { FC, useMemo } from "react";
+import { BlurhashCanvas } from "react-blurhash";
 
 export type Sizes = { minWidth: number; width: number }[];
 export type SrcSet = { src: string; width: number }[];
 
-export interface UnsplashImageProps {
+export interface ImageProps {
   src: string;
+  unsplash?: boolean;
   blurhash: string;
   alt?: string;
   className?: string;
@@ -38,11 +32,11 @@ function imageToSrcset(srcset: SrcSet) {
     .join(", ");
 }
 
-function getUnsplashImage(id: string, width: number, height: number) {
+function getImage(id: string, width: number, height: number) {
   return `https://source.unsplash.com/${id}/${width}x${height}`;
 }
 
-function unsplashToImageProps(
+function getImageProps(
   src: string,
   sizesArr: Sizes
 ): {
@@ -59,7 +53,7 @@ function unsplashToImageProps(
   const srcset = imageToSrcset(
     sizesArr.map(({ width }) => {
       return {
-        src: getUnsplashImage(id, width, Math.round(width / ratio)),
+        src: getImage(id, width, Math.round(width / ratio)),
         width,
       };
     })
@@ -71,8 +65,9 @@ function unsplashToImageProps(
   };
 }
 
-export const UnsplashImage: FC<UnsplashImageProps> = ({
+export const Image: FC<ImageProps> = ({
   src,
+  unsplash = true,
   blurhash,
   alt,
   className,
@@ -80,7 +75,24 @@ export const UnsplashImage: FC<UnsplashImageProps> = ({
   imageSizes,
 }) => {
   const { srcset, sizes } = useMemo(() => {
-    return unsplashToImageProps(src, imageSizes);
+    if (!unsplash) {
+      const sizes = imageToSizes(imageSizes);
+      const srcset = imageToSrcset(
+        imageSizes.map(({ width }) => {
+          return {
+            src,
+            width,
+          };
+        })
+      );
+
+      return {
+        srcset,
+        sizes,
+      };
+    }
+
+    return getImageProps(src, imageSizes);
   }, [src]);
 
   return (

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { UnsplashImage } from "./UnplashImage";
+import { Image } from "./Image";
 
 export const PostImage: FC<{ image: string; blurhash: string }> = ({
   image,
@@ -7,7 +7,7 @@ export const PostImage: FC<{ image: string; blurhash: string }> = ({
 }) => {
   return (
     <div className="absolute top-0 left-0 z-0 w-full h-96 motion-safe:animate-fade-in-slow">
-      <UnsplashImage
+      <Image
         blurhash={blurhash}
         src={image}
         imageSizes={[

@@ -159,6 +159,31 @@ export default function Index() {
             })}
           </div>
         </section>
+        <section className="md:mt-36 mt-24 mb-24">
+          <h2 className="text-2xl leading-none tracking-tight m-0 text-left mb-4 select-none motion-safe:animate-fade-in">
+            Projects
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a
+              href="https://smartrent-ui.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="no-underline"
+            >
+              <Card
+                image={"/assets/smartrent-ui.com.png"}
+                unsplashImage={false}
+                title="Design System"
+                blurhash="L87LJvtx4:jM0LV~]Po[{KnLCQRQ"
+                className="motion-safe:animate-fade-in"
+              >
+                <h3 className="absolute m-0 p-0 text-white opacity-80 text-base bottom-4 left-4">
+                  SmartKit
+                </h3>
+              </Card>
+            </a>
+          </div>
+        </section>
         <Footer />
       </main>
     </Layout>

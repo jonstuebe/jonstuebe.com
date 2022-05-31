@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { UnsplashImage } from "./UnplashImage";
+import { Image } from "./Image";
 
 export interface SocialCardProps {
   title: string;
@@ -25,7 +25,7 @@ export const SocialCard: FC<SocialCardProps> = ({
       }
     >
       {image ? (
-        <UnsplashImage
+        <Image
           src={image}
           alt={imageDescription}
           imageSizes={[

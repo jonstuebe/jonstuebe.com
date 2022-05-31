@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { UnsplashImage } from "./UnplashImage";
+import { Image } from "./Image";
 
 export interface CardProps {
   title: string;
   image: string;
+  unsplashImage?: boolean;
   blurhash: string;
   imageDescription?: string;
   className?: string;
@@ -12,6 +13,7 @@ export interface CardProps {
 export const Card: FC<CardProps> = ({
   title,
   image,
+  unsplashImage = true,
   imageDescription = "",
   blurhash,
   className = "",
@@ -25,8 +27,9 @@ export const Card: FC<CardProps> = ({
         className
       }
     >
-      <UnsplashImage
+      <Image
         src={image}
+        unsplash={unsplashImage}
         blurhash={blurhash}
         alt={imageDescription}
         imageSizes={[

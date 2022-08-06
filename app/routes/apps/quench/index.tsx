@@ -15,7 +15,7 @@ export default function Quench() {
         A simple water tracking app
       </p>
       <a
-        href="/"
+        href="https://apps.apple.com/us/app/quench-tracker/id1577232272"
         target="_blank"
         className="motion-safe:animate-fade-in-slow mb-4"
       >

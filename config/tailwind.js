@@ -20,6 +20,8 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
       animation: {
+        "water-drop":
+          "water-drop 700ms ease-in-out 200ms 1 normal forwards running",
         "fade-in-quick":
           "fade-in 250ms ease-in-out 0s 1 normal forwards running",
         "fade-in": "fade-in 350ms ease-in-out 0s 1 normal forwards running",
@@ -32,6 +34,16 @@ module.exports = {
           "text-in 500ms ease-in-out 0s 1 normal forwards running",
       },
       keyframes: {
+        "water-drop": {
+          "0%": {
+            transform: "translateY(-.5em)",
+            opacity: 0,
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: 1,
+          },
+        },
         "fade-in": {
           "0%": { opacity: 0 },
           "100%": { opacity: 1 },

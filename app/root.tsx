@@ -38,14 +38,14 @@ export const links: LinksFunction = () => {
 
 export default function App() {
   return (
-    <html lang="en" className="overflow-y-scroll">
+    <html lang="en" className="overflow-y-scroll w-full h-full">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body className="m-0 antialiased font-sans text-white scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-900 scrollbar-thumb-rounded-lg">
+      <body className="m-0 antialiased font-sans text-white scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-900 scrollbar-thumb-rounded-lg w-full h-full">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

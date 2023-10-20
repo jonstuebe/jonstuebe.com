@@ -1,8 +1,5 @@
 import { renderToString } from "react-dom/server";
-import type {
-  HeadersFunction,
-  LoaderFunction,
-} from "@remix-run/server-runtime";
+import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 
 import tailwindUrl from "~/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";

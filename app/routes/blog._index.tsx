@@ -8,7 +8,7 @@ import type {
   HeadersFunction,
   MetaFunction,
   LoaderFunction,
-} from "@remix-run/server-runtime";
+} from "@vercel/remix";
 
 import Layout from "~/components/Layout";
 import { Card } from "~/components/Card";

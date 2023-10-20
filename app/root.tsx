@@ -9,7 +9,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/server-runtime";
+import type { LinksFunction } from "@vercel/remix";
 
 import favicon from "./favicon.svg";
 import inter from "inter-ui/inter.css";

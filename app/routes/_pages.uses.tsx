@@ -1,5 +1,5 @@
 import { useLoaderData } from "@remix-run/react";
-import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
+import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 
 import { Heading } from "~/components/Heading";
 import { UnsplashImage } from "~/components/UnplashImage";

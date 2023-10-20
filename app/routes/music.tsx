@@ -1,8 +1,5 @@
 import { type V2_MetaFunction, useLoaderData } from "@remix-run/react";
-import type {
-  HeadersFunction,
-  LoaderFunction,
-} from "@remix-run/server-runtime";
+import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 
 import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";

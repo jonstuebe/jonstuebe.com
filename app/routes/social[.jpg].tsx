@@ -1,7 +1,10 @@
 import { renderToString } from "react-dom/server";
-import { HeadersFunction, LoaderFunction } from "remix";
+import type {
+  HeadersFunction,
+  LoaderFunction,
+} from "@remix-run/server-runtime";
 
-import tailwindUrl from "~/styles/tailwind.css";
+import tailwindUrl from "~/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
 import { getPuppeteer } from "~/utils/puppeteer";
 

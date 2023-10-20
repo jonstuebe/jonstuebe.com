@@ -1,10 +1,10 @@
-import { Link } from "remix";
+import { Link } from "@remix-run/react";
 
 export function Header() {
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex justify-between items-center py-4">
       <Link className="text-white no-underline select-none" to="/">
-        <h2 className="">Jon Stuebe</h2>
+        <h2 className="font-bold text-2xl">Jon Stuebe</h2>
       </Link>
       <nav className="flex space-x-4">
         <Link

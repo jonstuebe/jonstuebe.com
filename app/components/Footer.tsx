@@ -2,7 +2,7 @@ import { FC } from "react";
 
 export const Footer: FC = () => {
   return (
-    <div>
+    <div className="pb-4">
       <nav className="flex space-x-4 justify-center">
         <a
           href="https://twitter.com/jonstuebe"

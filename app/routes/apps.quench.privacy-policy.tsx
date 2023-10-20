@@ -1,9 +1,9 @@
 export default function PrivacyPolicy() {
   return (
-    <div className="flex flex-col p-4 mb-4 flex-1 relative prose">
+    <div className="flex flex-col p-4 mb-4 flex-1 m-auto relative prose">
       <div className="flex items-center flex-col mb-8">
         <img src="/logomark.svg" width={40} className="mb-2" />
-        <h1 className="m-0 mb-2">Quench</h1>
+        <h1 className="mb-2">Quench</h1>
       </div>
       <h3>Privacy Policy</h3>{" "}
       <p>

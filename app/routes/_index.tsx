@@ -1,16 +1,19 @@
 import { useEffect } from "react";
-import { HtmlMetaDescriptor, Link, useLoaderData } from "remix";
-import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
+import { Link, type V2_MetaFunction, useLoaderData } from "@remix-run/react";
+import type {
+  HeadersFunction,
+  LoaderFunction,
+} from "@remix-run/server-runtime";
 
-import Layout from "~/components/Layout";
 import { Card } from "~/components/Card";
 import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
+import Layout from "~/components/Layout";
 
-import { Post } from "~/types";
+import { PostType } from "~/types";
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return {} as HtmlMetaDescriptor;
+export const meta: V2_MetaFunction = ({ data }) => {
+  if (!data) return [];
 
   const url = new URL(data.url);
 
@@ -21,18 +24,18 @@ export const meta: MetaFunction = ({ data }) => {
   const description =
     "Hi, my name is Jon. I make apps. I'm an Engineering Manager at SmartRent.";
 
-  return {
-    title,
-    description,
-    "og:title": title,
-    "og:type": "website",
-    "og:image": url.href,
-    "og:url": data.url,
-    "twitter:card": "summary_large_image",
-    "twitter:creator": "@jonstuebe",
-    "twitter:title": title,
-    "twitter:image": url.href,
-  };
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:type", content: "website" },
+    { property: "og:image", content: url.href },
+    { property: "og:url", content: data.url },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:creator", content: "@jonstuebe" },
+    { property: "twitter:title", content: title },
+    { property: "twitter:image", content: url.href },
+  ];
 };
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -83,7 +86,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Index() {
-  const { posts } = useLoaderData<{ posts: Post[]; url: string }>();
+  const { posts } = useLoaderData<{ posts: PostType[]; url: string }>();
 
   useEffect(() => {
     console.clear();
@@ -96,7 +99,7 @@ export default function Index() {
     <Layout>
       <Header />
       <main className="pb-24">
-        <h2 className="text-1xl leading-none tracking-normal md:mt-36 mt-24 text-blue-400 text-left mb-3 motion-safe:animate-text-in-quick select-none">
+        <h2 className="text-2xl font-bold leading-none tracking-normal md:mt-36 mt-24 text-blue-400 text-left mb-3 motion-safe:animate-text-in-quick select-none">
           Hi, my name is Jon
         </h2>
         <h1 className="text-7xl leading-none font-extrabold tracking-tight mt-0 mb-4 text-left motion-safe:animate-text-in select-none">
@@ -130,7 +133,7 @@ export default function Index() {
           </a>
         </h2>
         <section className="md:mt-36 mt-24 mb-24">
-          <h2 className="text-2xl leading-none tracking-tight m-0 text-left mb-4 select-none motion-safe:animate-fade-in">
+          <h2 className="text-2xl font-bold leading-none tracking-tight m-0 text-left mb-4 select-none motion-safe:animate-fade-in">
             Recent Posts
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -147,10 +150,10 @@ export default function Index() {
                     blurhash={post.blurhash}
                     className="motion-safe:animate-fade-in"
                   >
-                    <h3 className="absolute m-0 p-0 text-white opacity-80 text-base bottom-4 left-4">
+                    <h3 className="absolute m-0 p-0 font-semibold text-white opacity-80 text-base bottom-4 left-4">
                       {post.date}
                     </h3>
-                    <h3 className="absolute m-0 p-0 text-white opacity-80 text-base bottom-4 right-4">
+                    <h3 className="absolute m-0 p-0 font-semibold text-white opacity-80 text-base bottom-4 right-4">
                       {post.readingTime}
                     </h3>
                   </Card>

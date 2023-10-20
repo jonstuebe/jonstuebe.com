@@ -1,15 +1,18 @@
-import { HtmlMetaDescriptor, useLoaderData } from "remix";
-import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
+import { V2_MetaFunction, useLoaderData } from "@remix-run/react";
+import type {
+  HeadersFunction,
+  LoaderFunction,
+} from "@remix-run/server-runtime";
 
 import Layout from "~/components/Layout";
 import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 import { PostImage } from "~/components/PostImage";
 
-import { Post } from "~/types";
+import { type PostType } from "~/types";
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return {} as HtmlMetaDescriptor;
+export const meta: V2_MetaFunction = ({ data }) => {
+  if (!data) return [];
 
   const { title } = data;
   const url = data.url as string;
@@ -17,17 +20,17 @@ export const meta: MetaFunction = ({ data }) => {
     ? url.slice(0, -1)
     : url + "/social.jpg";
 
-  return {
-    title,
-    "og:title": title,
-    "og:type": "article",
-    "og:image": socialImage,
-    "og:url": url,
-    "twitter:card": "summary_large_image",
-    "twitter:creator": "@jonstuebe",
-    "twitter:title": title,
-    "twitter:image": socialImage + "?type=twitter",
-  };
+  return [
+    { title },
+    { property: "og:title", content: title },
+    { property: "og:type", content: "article" },
+    { property: "og:image", content: socialImage },
+    { property: "og:url", content: url },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:creator", content: "@jonstuebe" },
+    { property: "twitter:title", content: title },
+    { property: "twitter:image", content: socialImage + "?type=twitter" },
+  ];
 };
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -72,7 +75,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 export default function Post() {
-  const post = useLoaderData<Post>();
+  const post = useLoaderData<PostType>();
 
   return (
     <div className="w-full relative">

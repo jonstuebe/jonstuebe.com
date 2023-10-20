@@ -1,4 +1,5 @@
-import { LinksFunction, LoaderFunction, useLoaderData } from "remix";
+import { useLoaderData } from "@remix-run/react";
+import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
 
 import { Heading } from "~/components/Heading";
 import { UnsplashImage } from "~/components/UnplashImage";
@@ -165,15 +166,17 @@ export const loader: LoaderFunction = ({ request }) => {
 };
 
 export default function UsesPage() {
-  const { apps, extensions } =
-    useLoaderData<{ apps: App[]; extensions: Extension[] }>();
+  const { apps, extensions } = useLoaderData<{
+    apps: App[];
+    extensions: Extension[];
+  }>();
   return (
     <>
       <Heading type="h1">Uses</Heading>
 
       <div className="grid gap-8 grid-cols-1">
         <div>
-          <h2 className="pl-2 text-4xl">Apps</h2>
+          <h2 className="pl-2 text-4xl font-bold mb-8">Apps</h2>
           <div className="grid gap-8 sm:grid-cols-2 grid-cols-1">
             {apps.map((app, idx) => {
               return (
@@ -183,7 +186,7 @@ export default function UsesPage() {
                   className="block no-underline rounded-md bg-slate-900 opacity-80 hover:opacity-100 p-4"
                   key={idx}
                 >
-                  <h3 className="p-0 m-0 mb-2 text-gray-300 text-xl">
+                  <h3 className="p-0 m-0 mb-2 font-bold text-gray-300 text-xl">
                     {app.name}
                   </h3>
                   <p className="text-gray-400 m-0 p-0">{app.description}</p>
@@ -195,8 +198,8 @@ export default function UsesPage() {
 
         <div>
           <div className="grid gap-8 sm:grid-cols-2 grid-cols-1">
-            <h2 className="pl-2 text-4xl">Editor</h2>
-            <h2 className="pl-2 text-4xl">Extensions</h2>
+            <h2 className="pl-2 text-4xl font-bold mb-8">Editor</h2>
+            <h2 className="pl-2 text-4xl font-bold mb-8">Extensions</h2>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 grid-cols-1">
             <a
@@ -216,7 +219,7 @@ export default function UsesPage() {
                 ]}
               />
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-slate-900 to-black opacity-70 hover:opacity-50 transition-all ease-in-out" />
-              <h3 className="text-3xl color-white z-10 relative m-0 mt-4 ml-4 pointer-events-none">
+              <h3 className="text-3xl font-bold color-white z-10 relative m-0 mt-4 ml-4 pointer-events-none">
                 VSCode
               </h3>
             </a>
@@ -229,7 +232,7 @@ export default function UsesPage() {
                     className="block no-underline rounded-md bg-slate-900 opacity-80 hover:opacity-100 p-4"
                     key={idx}
                   >
-                    <h3 className="p-0 m-0 text-gray-300 text-sm">
+                    <h3 className="p-0 m-0 font-bold text-gray-300 text-sm">
                       {extension.name}
                     </h3>
                   </a>
@@ -240,7 +243,7 @@ export default function UsesPage() {
         </div>
 
         <div>
-          <h2 className="pl-2 text-4xl">Font</h2>
+          <h2 className="pl-2 text-4xl font-bold mb-8">Font</h2>
           <a
             href="https://github.com/tonsky/FiraCode"
             target="_blank"
@@ -255,21 +258,6 @@ export default function UsesPage() {
           </a>
         </div>
       </div>
-      {/* <div className="grid gap-8 sm:grid-cols-2 grid-cols-1">
-        {apps.map((app, idx) => {
-          return (
-            <a
-              href={app.url}
-              target="_blank"
-              className="block no-underline rounded-md bg-slate-900 opacity-80 hover:opacity-100 p-4"
-              key={idx}
-            >
-              <h3 className="p-0 m-0 mb-2 text-gray-300 text-xl">{app.name}</h3>
-              <p className="text-gray-400 m-0 p-0">{app.description}</p>
-            </a>
-          );
-        })}
-      </div> */}
     </>
   );
 }

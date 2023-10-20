@@ -16,9 +16,9 @@ export const Heading: FC<HeadingProps> = ({
   const size = useMemo(() => {
     switch (type) {
       case "h1":
-        return "text-5xl lg:text-8xl lg:py-32 py-24 text-center";
+        return "text-5xl font-bold lg:text-8xl lg:py-32 py-24 text-center";
       default:
-        return "text-2xl";
+        return "text-2xl font-semibold";
     }
   }, [type]);
 

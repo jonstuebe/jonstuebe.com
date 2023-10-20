@@ -9,6 +9,3 @@ node_modules
 public/build
 api/index.js
 api/*
-
-.yarn/install-state.gz
-.yarn/cache

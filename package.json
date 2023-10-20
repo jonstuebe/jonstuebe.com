@@ -15,6 +15,7 @@
     "@remix-run/react": "^2.1.0",
     "@remix-run/serve": "^2.1.0",
     "@tailwindcss/typography": "^0.5.0",
+    "@vercel/analytics": "^1.1.1",
     "@vercel/remix": "^2.1.0",
     "autoprefixer": "^10.4.1",
     "blurhash": "^1.1.4",

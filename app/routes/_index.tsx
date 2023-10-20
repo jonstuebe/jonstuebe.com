@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, type V2_MetaFunction, useLoaderData } from "@remix-run/react";
+import { Link, type MetaFunction, useLoaderData } from "@remix-run/react";
 import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 
 import { Card } from "~/components/Card";
@@ -9,7 +9,7 @@ import Layout from "~/components/Layout";
 
 import { PostType } from "~/types";
 
-export const meta: V2_MetaFunction = ({ data }) => {
+export const meta: MetaFunction = ({ data }) => {
   if (!data) return [];
 
   const url = new URL(data.url);

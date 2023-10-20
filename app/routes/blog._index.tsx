@@ -1,7 +1,7 @@
 import {
   HtmlMetaDescriptor,
   Link,
-  V2_MetaFunction,
+  MetaFunction,
   useLoaderData,
 } from "@remix-run/react";
 import type {
@@ -17,7 +17,7 @@ import { Header } from "~/components/Header";
 
 import { PostType } from "~/types";
 
-export const meta: V2_MetaFunction = ({ data }) => {
+export const meta: MetaFunction = ({ data }) => {
   if (!data) return [];
 
   const url = new URL(data.url);

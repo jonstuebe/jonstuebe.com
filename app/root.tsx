@@ -5,11 +5,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  V2_MetaFunction,
+  MetaFunction,
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
 import type { LinksFunction } from "@vercel/remix";
+import { Analytics } from "@vercel/analytics/react";
 
 import favicon from "./favicon.svg";
 import inter from "inter-ui/inter.css";
@@ -19,7 +20,7 @@ import Layout from "./components/Layout";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [{ title: "Jon Stuebe" }];
 };
 
@@ -72,6 +73,7 @@ export function ErrorBoundary() {
           <Links />
         </head>
         <body className="m-0 antialiased font-sans text-white scrollbar scrollbar-thumb-gray-700 scrollbar-track-gray-900 scrollbar-thumb-rounded-lg">
+          <Analytics />
           <Layout>
             <Header />
             <main>
@@ -81,7 +83,7 @@ export function ErrorBoundary() {
                 </h1>
                 <div className="h-32 mx-8 w-1 bg-white"></div>
                 <h2 className="text-6xl tracking-tight motion-safe:animate-text-in-slow select-none">
-                  {error.error?.message || error.statusText}
+                  {error.statusText}
                 </h2>
               </div>
             </main>

@@ -1,4 +1,4 @@
-import { V2_MetaFunction, useLoaderData } from "@remix-run/react";
+import { MetaFunction, useLoaderData } from "@remix-run/react";
 import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 
 import Layout from "~/components/Layout";
@@ -8,7 +8,7 @@ import { Note } from "~/components/Note";
 
 import type { NoteType as NoteType } from "~/types";
 
-export const meta: V2_MetaFunction = ({ data }) => {
+export const meta: MetaFunction = ({ data }) => {
   if (!data) return [];
 
   const url = new URL(data.url);

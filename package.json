@@ -6,7 +6,6 @@
   "scripts": {
     "build": "remix build",
     "dev": "node -r dotenv/config node_modules/.bin/remix dev",
-    "postinstall": "remix setup node",
     "sync": "npm run token && node -r esbuild-register sync.ts",
     "token": "node -r esbuild-register token.ts"
   },

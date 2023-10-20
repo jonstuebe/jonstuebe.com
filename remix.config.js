@@ -13,8 +13,6 @@ module.exports = {
   ignoredRouteFiles: [".*"],
   tailwind: true,
 
-  serverDependenciesToBundle: ["chalk"],
-
   browserNodeBuiltinsPolyfill: {
     modules: {
       url: true,

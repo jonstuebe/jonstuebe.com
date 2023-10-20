@@ -9,5 +9,3 @@ node_modules
 public/build
 api/index.js
 api/*
-
-app/styles/tailwind.css

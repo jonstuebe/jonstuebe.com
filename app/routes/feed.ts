@@ -1,39 +1,24 @@
 import { format, parseISO } from "date-fns";
 import { LoaderFunction } from "@vercel/remix";
+import { getAllPosts } from "../../lib/api";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const sanitize = (text: string) => {
     return text.replace(/&/g, "&amp;");
   };
 
-  const createClient = (await import("redis")).createClient;
-  const client = createClient({
-    url: process.env.REDIS_URL,
-  });
-
-  await client.connect();
-
-  const cachedPosts = await client.keys("post:*");
-
-  const cmd = client.multi();
-  for (const cachedPostName of cachedPosts) {
-    cmd.hGetAll(cachedPostName);
-  }
-
-  const posts = (await cmd.exec()) as unknown as {
-    slug: string;
-    title: string;
-    date: string;
-    dateObj: string;
-    image: string;
-    readingTime: string;
-    summary: string;
-    content: string;
-    html: string;
-    draft: string;
-  }[];
-
-  await client.disconnect();
+  const posts = await getAllPosts([
+    "slug",
+    "title",
+    "date",
+    "dateObj",
+    "image",
+    "readingTime",
+    "summary",
+    "content",
+    "draft",
+    "blurhash",
+  ]);
 
   const postItems = posts
     .filter((post) => {

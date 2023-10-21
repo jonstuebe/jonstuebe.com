@@ -1,4 +1,4 @@
-import { createClient } from "redis";
+// import { createClient } from "redis";
 import { encode } from "blurhash";
 import fprint from "fprint";
 import path from "path";
@@ -7,10 +7,10 @@ import { promises as fs } from "fs";
 import { globbySync } from "globby";
 import fetch from "node-fetch";
 import sharp from "sharp";
+import SpotifyWebApi from "spotify-web-api-node";
 
 import { getNotes, getPosts } from "./lib/api";
 import markdownToHtml from "./lib/markdownToHtml";
-import SpotifyWebApi from "spotify-web-api-node";
 import { TrackType } from "~/types";
 
 require("dotenv").config();
@@ -242,21 +242,21 @@ async function getTopTracks(): Promise<TrackType[]> {
     console.log(chalk.green("✅No Note Changes"));
   }
 
-  const client = createClient({
-    url: process.env.REDIS_URL,
-  });
+  // const client = createClient({
+  //   url: process.env.REDIS_URL,
+  // });
 
-  await client.connect();
-  const cmd = client.multi();
+  // await client.connect();
+  // const cmd = client.multi();
 
   // get all post keys from redis
-  const cachedPostsSlugs = (await client.keys("post:*")).map((p) =>
+  const cachedPostsSlugs = (await client.keys("post:*")).map((p: string) =>
     p.replace("post:", "")
   );
   const postSlugs = getPostSlugs();
 
   // detect which posts should be removed from the redis cache
-  const postsToPurge = cachedPostsSlugs.filter((slug) => {
+  const postsToPurge = cachedPostsSlugs.filter((slug: string) => {
     return !postSlugs.includes(slug);
   });
 
@@ -299,67 +299,72 @@ async function getTopTracks(): Promise<TrackType[]> {
   }
   await fingerprintPosts();
 
-  // get all note keys from redis
-  const cachedNotesSlugs = (await client.keys("note:*")).map((p) =>
-    p.replace("note:", "")
-  );
-  const noteSlugs = getNoteSlugs();
+  // // get all note keys from redis
+  // const cachedNotesSlugs = (await client.keys("note:*")).map((p: string) =>
+  //   p.replace("note:", "")
+  // );
+  // const noteSlugs = getNoteSlugs();
 
-  // detect which notes should be removed from the redis cache
-  const notesToPurge = cachedNotesSlugs.filter((slug) => {
-    return !noteSlugs.includes(slug);
-  });
+  // // detect which notes should be removed from the redis cache
+  // const notesToPurge = cachedNotesSlugs.filter((slug: string) => {
+  //   return !noteSlugs.includes(slug);
+  // });
 
-  for (const noteToPurge of notesToPurge) {
-    cmd.hDel(`note:${noteToPurge}`, [
-      "title",
-      "date",
-      "slug",
-      "content",
-      "readingTime",
-      "summary",
-      "image",
-      "dateObj",
-      "draft",
-    ]);
-    console.log(chalk.red(`Purging Note: ${noteToPurge}`));
+  // for (const noteToPurge of notesToPurge) {
+  //   cmd.hDel(`note:${noteToPurge}`, [
+  //     "title",
+  //     "date",
+  //     "slug",
+  //     "content",
+  //     "readingTime",
+  //     "summary",
+  //     "image",
+  //     "dateObj",
+  //     "draft",
+  //   ]);
+  //   console.log(chalk.red(`Purging Note: ${noteToPurge}`));
+  // }
+
+  // const notes = await getNotes(changedNotes, [
+  //   "title",
+  //   "date",
+  //   "slug",
+  //   "content",
+  //   "readingTime",
+  //   "summary",
+  //   "image",
+  //   "dateObj",
+  //   "draft",
+  // ]);
+
+  // for (const note of notes) {
+  //   cmd.hSet(`note:${note.slug}`, {
+  //     ...note,
+  //     content: await markdownToHtml(note.content),
+  //   });
+  // }
+  // await fingerprintNotes();
+
+  // const cachedTracks = await client.keys("music:topTracks:*");
+
+  // for (const cachedTrack of cachedTracks) {
+  //   cmd.hDel(cachedTrack, [
+  //     "url",
+  //     "name",
+  //     "artist",
+  //     "album",
+  //     "image",
+  //     "id",
+  //     "index",
+  //   ]);
+  // }
+
+  try {
+    await cmd.exec();
+  } catch (e) {
+    console.log(e);
+    process.exit(1);
   }
-
-  const notes = await getNotes(changedNotes, [
-    "title",
-    "date",
-    "slug",
-    "content",
-    "readingTime",
-    "summary",
-    "image",
-    "dateObj",
-    "draft",
-  ]);
-
-  for (const note of notes) {
-    cmd.hSet(`note:${note.slug}`, {
-      ...note,
-      content: await markdownToHtml(note.content),
-    });
-  }
-  await fingerprintNotes();
-
-  const cachedTracks = await client.keys("music:topTracks:*");
-
-  for (const cachedTrack of cachedTracks) {
-    cmd.hDel(cachedTrack, [
-      "url",
-      "name",
-      "artist",
-      "album",
-      "image",
-      "id",
-      "index",
-    ]);
-  }
-
-  await cmd.exec();
 
   const topTracks = await getTopTracks();
 

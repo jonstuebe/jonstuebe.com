@@ -11,6 +11,7 @@ import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 
 import { PostType } from "~/types";
+import { getAllPosts } from "../../lib/api";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -45,34 +46,18 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const createClient = (await import("redis")).createClient;
-  const client = createClient({
-    url: process.env.REDIS_URL,
-  });
-
-  await client.connect();
-
-  const cachedPosts = await client.keys("post:*");
-
-  const cmd = client.multi();
-  for (const cachedPostName of cachedPosts) {
-    cmd.hGetAll(cachedPostName);
-  }
-
-  const posts = (await cmd.exec()) as unknown as {
-    slug: string;
-    title: string;
-    date: string;
-    dateObj: string;
-    image: string;
-    readingTime: string;
-    summary: string;
-    content: string;
-    html: string;
-    draft: string;
-  }[];
-
-  await client.disconnect();
+  const posts = await getAllPosts([
+    "slug",
+    "title",
+    "date",
+    "dateObj",
+    "image",
+    "readingTime",
+    "summary",
+    "content",
+    "draft",
+    "blurhash",
+  ]);
 
   return {
     posts: posts

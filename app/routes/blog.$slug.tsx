@@ -7,6 +7,8 @@ import { Header } from "~/components/Header";
 import { PostImage } from "~/components/PostImage";
 
 import { type PostType } from "~/types";
+import { getPostBySlug } from "../../lib/api";
+import markdownToHtml from "../../lib/markdownToHtml";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -44,26 +46,30 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   try {
-    const createClient = (await import("redis")).createClient;
-    const client = createClient({
-      url: process.env.REDIS_URL,
-    });
-
-    await client.connect();
-
-    const post = await client.hGetAll(`post:${params.slug}`);
+    const post = await getPostBySlug(params.slug, [
+      "slug",
+      "title",
+      "date",
+      "dateObj",
+      "image",
+      "readingTime",
+      "summary",
+      "content",
+      "draft",
+      "blurhash",
+    ]);
 
     const url = new URL(request.url);
-
     if (post.draft && !url.searchParams.has("preview")) {
       throw new Response("Not Found", {
         status: 404,
       });
     }
 
-    await client.disconnect();
-
-    return { ...post, url: request.url };
+    return {
+      ...post,
+      url: request.url,
+    };
   } catch {
     throw new Response("Not Found", {
       status: 404,

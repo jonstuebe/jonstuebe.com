@@ -7,6 +7,7 @@ import { Header } from "~/components/Header";
 import { Note } from "~/components/Note";
 
 import type { NoteType as NoteType } from "~/types";
+import { getAllNotes } from "../../lib/api";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -41,33 +42,13 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const createClient = (await import("redis")).createClient;
-  const client = createClient({
-    url: process.env.REDIS_URL,
-  });
-
-  await client.connect();
-
-  const cachedNotes = await client.keys("note:*");
-
-  const cmd = client.multi();
-  for (const cachedNoteName of cachedNotes) {
-    cmd.hGetAll(cachedNoteName);
-  }
-
-  const notes = (await cmd.exec()) as unknown as {
-    slug: string;
-    title: string;
-    date: string;
-    dateObj: string;
-    image: string;
-    readingTime: string;
-    summary: string;
-    content: string;
-    html: string;
-  }[];
-
-  await client.disconnect();
+  const notes = await getAllNotes([
+    "slug",
+    "title",
+    "date",
+    "dateObj",
+    "content",
+  ]);
 
   return {
     notes: notes.sort((note1, note2) =>

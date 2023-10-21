@@ -23,10 +23,10 @@ export function Header() {
         </Link>
         <Link
           className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
-          to="/music"
+          to="/uses"
           prefetch="render"
         >
-          music
+          uses
         </Link>
       </nav>
     </header>

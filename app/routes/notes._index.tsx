@@ -42,13 +42,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const notes = await getAllNotes([
-    "slug",
-    "title",
-    "date",
-    "dateObj",
-    "content",
-  ]);
+  const notes = await getAllNotes();
 
   return {
     notes: notes.sort((note1, note2) =>

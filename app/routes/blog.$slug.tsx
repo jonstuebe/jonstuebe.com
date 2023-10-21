@@ -46,18 +46,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   try {
-    const post = await getPostBySlug(params.slug, [
-      "slug",
-      "title",
-      "date",
-      "dateObj",
-      "image",
-      "readingTime",
-      "summary",
-      "content",
-      "draft",
-      "blurhash",
-    ]);
+    const post = await getPostBySlug(params.slug);
 
     const url = new URL(request.url);
     if (post.draft && !url.searchParams.has("preview")) {

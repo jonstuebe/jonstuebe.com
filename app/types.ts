@@ -1,17 +1,22 @@
-export type Fields =
-  | "slug"
-  | "title"
-  | "date"
-  | "dateObj"
-  | "image"
-  | "readingTime"
-  | "summary"
-  | "content"
-  | "draft"
-  | "blurhash";
-
-export type PostType = Record<Fields, string>;
-export type NoteType = Record<Fields, string>;
+export type PostType = {
+  slug: string;
+  title: string;
+  date: string;
+  dateObj: string;
+  image: string;
+  readingTime: string;
+  summary: string;
+  content: string;
+  draft: boolean;
+  blurhash: string;
+};
+export type NoteType = {
+  slug: string;
+  title: string;
+  date: string;
+  dateObj: string;
+  content: string;
+};
 
 export type TrackType = {
   id: string;

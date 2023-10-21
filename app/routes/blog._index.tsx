@@ -46,18 +46,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getAllPosts([
-    "slug",
-    "title",
-    "date",
-    "dateObj",
-    "image",
-    "readingTime",
-    "summary",
-    "content",
-    "draft",
-    "blurhash",
-  ]);
+  const posts = await getAllPosts();
 
   return {
     posts: posts

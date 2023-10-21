@@ -22,18 +22,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     const { browser } = await getPuppeteer();
 
-    const post = await getPostBySlug(params.slug, [
-      "slug",
-      "title",
-      "date",
-      "dateObj",
-      "image",
-      "readingTime",
-      "summary",
-      "content",
-      "draft",
-      "blurhash",
-    ]);
+    const post = await getPostBySlug(params.slug);
 
     if (post.draft) {
       return json({});

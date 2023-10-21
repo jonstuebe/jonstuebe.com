@@ -6,7 +6,7 @@ import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 import { PostImage } from "~/components/PostImage";
 
-import { type PostType } from "~/types";
+import { getPostBySlug } from "../utils/hashnode";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -44,27 +44,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   try {
-    const createClient = (await import("redis")).createClient;
-    const client = createClient({
-      url: process.env.REDIS_URL,
-    });
+    const post = await getPostBySlug(params.slug);
 
-    await client.connect();
-
-    const post = await client.hGetAll(`post:${params.slug}`);
-
-    const url = new URL(request.url);
-
-    if (post.draft && !url.searchParams.has("preview")) {
-      throw new Response("Not Found", {
-        status: 404,
-      });
-    }
-
-    await client.disconnect();
-
-    return { ...post, url: request.url };
-  } catch {
+    return {
+      ...post,
+      url: request.url,
+    };
+  } catch (e) {
     throw new Response("Not Found", {
       status: 404,
     });
@@ -72,11 +58,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 export default function Post() {
-  const post = useLoaderData<PostType>();
+  const post = useLoaderData<ReturnType<typeof getPostBySlug>>();
 
   return (
     <div className="w-full relative">
-      <PostImage image={post.image} blurhash={post.blurhash} />
+      <PostImage image={post.coverImage.url} />
       <Layout className="relative z-10">
         <Header />
         <main>
@@ -84,15 +70,15 @@ export default function Post() {
             {post.title}
           </h2>
           <h3 className="text-xl lg:text-2xl text-center font-light text-gray-300 mt-0 mb-2 motion-safe:animate-text-in-slow">
-            {post.date}
+            {post.publishedAt}
           </h3>
-          <h4 className="text-xl lg:text-2xl text-center font-light text-gray-400 mt-0 mb-24 motion-safe:animate-text-in-slow">
-            {post.readingTime}
+          <h4 className="text-xl text-center font-light text-gray-400 mt-0 mb-24 motion-safe:animate-text-in-slow">
+            {post.readTimeInMinutes} minutes
           </h4>
           <article
             className="prose prose-dark lg:prose-xl w-full lg:max-w-4xl m-auto mb-32 motion-safe:animate-fade-in-slow"
             dangerouslySetInnerHTML={{
-              __html: post.content,
+              __html: post.content.html,
             }}
           />
         </main>

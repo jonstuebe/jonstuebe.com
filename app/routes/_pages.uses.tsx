@@ -2,7 +2,6 @@ import { useLoaderData } from "@remix-run/react";
 import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 
 import { Heading } from "~/components/Heading";
-import { UnsplashImage } from "~/components/UnplashImage";
 
 type App = {
   name: string;
@@ -207,17 +206,15 @@ export default function UsesPage() {
               target="_blank"
               className="relative rounded-md w-full overflow-hidden h-40 no-underline text-gray-400 hover:text-gray-200"
             >
-              <UnsplashImage
-                src="https://source.unsplash.com/aZEBwDrdcSs/987x1480"
-                blurhash="|02Ykh00~q0f=ZE-$^Mzxt%$Dg-?MwkDt8M_xvWA4,^*EU+?F|-5E2-=I9xuNFt6Rjt8RPt7X9Vrx_MwxoNexHNGxuRPbd9t-nI[sRW=oaR:r;T1R#oMW?acozRPxvRiflxFNLs*WFozRPxuNHwbMxx^NEsWSixCRjkCsp"
-                className="absolute top-0 left-0 w-full h-full pointer-events-none"
-                imageClassName="object-cover"
-                imageSizes={[
-                  { minWidth: 800, width: 700 },
-                  { minWidth: 500, width: 400 },
-                  { minWidth: 320, width: 250 },
-                ]}
-              />
+              <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <img
+                  src="https://source.unsplash.com/aZEBwDrdcSs/987x1480"
+                  className={
+                    "absolute w-full h-full absolute-center object-cover"
+                  }
+                  decoding="async"
+                />
+              </div>
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-slate-900 to-black opacity-70 hover:opacity-50 transition-all ease-in-out" />
               <h3 className="text-3xl font-bold color-white z-10 relative m-0 mt-4 ml-4 pointer-events-none">
                 VSCode

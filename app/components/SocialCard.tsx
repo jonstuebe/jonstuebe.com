@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { UnsplashImage } from "./UnplashImage";
 
 export interface SocialCardProps {
   title: string;
   image?: string;
   imageDescription?: string;
   className?: string;
-  readingTime?: string;
+  readingTime?: number;
 }
 
 export const SocialCard: FC<SocialCardProps> = ({
@@ -25,20 +24,13 @@ export const SocialCard: FC<SocialCardProps> = ({
       }
     >
       {image ? (
-        <UnsplashImage
-          src={image}
-          alt={imageDescription}
-          imageSizes={[
-            { minWidth: 2000, width: 2000 },
-            { minWidth: 1500, width: 1200 },
-            { minWidth: 1200, width: 1000 },
-            { minWidth: 800, width: 700 },
-            { minWidth: 500, width: 400 },
-            { minWidth: 320, width: 250 },
-          ]}
-          blurhash=""
-          className="absolute absolute-center w-full h-full object-fit"
-        />
+        <div className="absolute absolute-center w-full h-full object-fit">
+          <img
+            src={image}
+            alt={imageDescription}
+            className="absolute w-full h-full absolute-center object-fit"
+          />
+        </div>
       ) : null}
       <div className="bg-black opacity-50 w-full h-full absolute absolute-center pointer-events-none"></div>
       <div className="opacity-20 bg-gradient-to-t from-black via-black to-transparent w-full h-1/2 absolute bottom-0 left-0 pointer-events-none"></div>
@@ -50,7 +42,7 @@ export const SocialCard: FC<SocialCardProps> = ({
       </h3>
       {readingTime ? (
         <h3 className="absolute m-0 p-0 text-white opacity-80 text-6xl bottom-14 right-8">
-          {readingTime}
+          {readingTime} minutes
         </h3>
       ) : null}
     </div>

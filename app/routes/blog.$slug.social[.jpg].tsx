@@ -4,6 +4,7 @@ import { json, type HeadersFunction, type LoaderFunction } from "@vercel/remix";
 import tailwindUrl from "~/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
 import { getPuppeteer } from "~/utils/puppeteer";
+import { getPostBySlug } from "../utils/hashnode";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
@@ -12,22 +13,16 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  if (!params.slug) {
+    throw new Response("Not Found", {
+      status: 404,
+    });
+  }
+
   try {
     const { browser } = await getPuppeteer();
 
-    const createClient = (await import("redis")).createClient;
-    const client = createClient({
-      url: process.env.REDIS_URL,
-    });
-
-    await client.connect();
-
-    const post = await client.hGetAll(`post:${params.slug}`);
-    await client.disconnect();
-
-    if (post.draft) {
-      return json({});
-    }
+    const post = await getPostBySlug(params.slug);
 
     const page = await browser.newPage();
 
@@ -40,8 +35,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const html = renderToString(
       <SocialCard
         title={post.title}
-        image={post.image}
-        readingTime={post.readingTime}
+        image={post.coverImage.url}
+        readingTime={post.readTimeInMinutes}
       />
     );
 

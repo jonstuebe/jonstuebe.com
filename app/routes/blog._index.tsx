@@ -9,7 +9,7 @@ import Layout from "~/components/Layout";
 import { Card } from "~/components/Card";
 import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
-import { PostType, getPosts } from "../utils/hashnode";
+import { PostType, formatReadingTime, getPosts } from "../utils/hashnode";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -78,7 +78,7 @@ export default function Posts() {
                     {post.publishedAt}
                   </h3>
                   <h3 className="absolute m-0 p-0 text-white opacity-80 text-base bottom-4 right-4">
-                    {post.readTimeInMinutes} minutes
+                    {formatReadingTime(post.readTimeInMinutes)}
                   </h3>
                 </Card>
               </Link>

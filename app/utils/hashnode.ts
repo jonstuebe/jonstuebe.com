@@ -18,6 +18,12 @@ export interface PostType {
   };
 }
 
+export function formatReadingTime(readTimeInMinutes: number) {
+  return readTimeInMinutes > 1
+    ? `${readTimeInMinutes} minutes`
+    : `${readTimeInMinutes} minute`;
+}
+
 function addPostMetadata(post: PostType) {
   return {
     ...post,

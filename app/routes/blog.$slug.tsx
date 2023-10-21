@@ -6,7 +6,7 @@ import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 import { PostImage } from "~/components/PostImage";
 
-import { getPostBySlug } from "../utils/hashnode";
+import { formatReadingTime, getPostBySlug } from "../utils/hashnode";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -73,7 +73,7 @@ export default function Post() {
             {post.publishedAt}
           </h3>
           <h4 className="text-xl text-center font-light text-gray-400 mt-0 mb-24 motion-safe:animate-text-in-slow">
-            {post.readTimeInMinutes} minutes
+            {formatReadingTime(post.readTimeInMinutes)}
           </h4>
           <article
             className="prose prose-dark lg:prose-xl w-full lg:max-w-4xl m-auto mb-32 motion-safe:animate-fade-in-slow"

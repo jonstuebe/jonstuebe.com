@@ -4,7 +4,7 @@ import { json, type HeadersFunction, type LoaderFunction } from "@vercel/remix";
 import tailwindUrl from "~/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
 import { getPuppeteer } from "~/utils/puppeteer";
-import { getPostBySlug } from "../utils/hashnode";
+import { formatReadingTime, getPostBySlug } from "../utils/hashnode";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       <SocialCard
         title={post.title}
         image={post.coverImage.url}
-        readingTime={post.readTimeInMinutes}
+        readingTime={formatReadingTime(post.readTimeInMinutes)}
       />
     );
 

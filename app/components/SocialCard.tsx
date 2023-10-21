@@ -5,7 +5,7 @@ export interface SocialCardProps {
   image?: string;
   imageDescription?: string;
   className?: string;
-  readingTime?: number;
+  readingTime?: string;
 }
 
 export const SocialCard: FC<SocialCardProps> = ({
@@ -42,7 +42,7 @@ export const SocialCard: FC<SocialCardProps> = ({
       </h3>
       {readingTime ? (
         <h3 className="absolute m-0 p-0 text-white opacity-80 text-6xl bottom-14 right-8">
-          {readingTime} minutes
+          {readingTime}
         </h3>
       ) : null}
     </div>

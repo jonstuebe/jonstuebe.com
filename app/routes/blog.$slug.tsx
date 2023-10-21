@@ -30,12 +30,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   ];
 };
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
-  return {
-    "Cache-Control": loaderHeaders.get("Cache-Control") ?? "max-age=43200",
-  };
-};
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   if (!params.slug) {
     throw new Response("Not Found", {

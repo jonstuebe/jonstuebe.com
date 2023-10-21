@@ -35,12 +35,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   ];
 };
 
-export const headers: HeadersFunction = () => {
-  return {
-    "Cache-Control": "max-age=600",
-  };
-};
-
 export const loader: LoaderFunction = async ({ request }) => {
   const posts = await getPosts();
 

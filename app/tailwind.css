@@ -53,6 +53,10 @@ body {
   opacity: 1;
 }
 
+.prose.prose--note code {
+  font-size: 0.85rem;
+}
+
 @layer utilities {
   @layer hover {
     .blur-0 {

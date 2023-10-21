@@ -1,18 +1,14 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+import { type Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
-const round = (num) =>
+const round = (num: number) =>
   num
     .toFixed(7)
     .replace(/(\.[0-9]+?)0+$/, "$1")
     .replace(/\.0$/, "");
-const rem = (px) => `${round(px / 16)}rem`;
+const rem = (px: number) => `${round(px / 16)}rem`;
 
-module.exports = {
-  mode: "jit",
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
+export default {
   content: ["./app/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -37,23 +33,23 @@ module.exports = {
         "water-drop": {
           "0%": {
             transform: "translateY(-.5em)",
-            opacity: 0,
+            opacity: "0",
           },
           "100%": {
             transform: "translateY(0)",
-            opacity: 1,
+            opacity: "1",
           },
         },
         "fade-in": {
-          "0%": { opacity: 0 },
-          "100%": { opacity: 1 },
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
         "text-in": {
-          "0%": { opacity: 0, transform: "translateY(.5em)" },
-          "100%": { opacity: 1, transform: "translateY(0)" },
+          "0%": { opacity: "0", transform: "translateY(.5em)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
-      typography: (theme) => ({
+      typography: (theme: any) => ({
         DEFAULT: {
           css: {
             color: theme("colors.gray.400"),
@@ -113,7 +109,7 @@ module.exports = {
     transition: ["motion-safe"],
     transform: ["motion-safe"],
     typography: ["responsive"],
-    scrollbar: ["hover"],
+    // scrollbar: ["hover"],
     opacity: [],
     extend: {
       opacity: ["hover"],
@@ -123,6 +119,6 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/typography"),
-    require("tailwindcss-scrollbar"),
+    // require("tailwindcss-scrollbar"),
   ],
-};
+} satisfies Config;

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { UnsplashImage } from "./UnplashImage";
 
 export interface CardProps {
@@ -9,7 +9,7 @@ export interface CardProps {
   className?: string;
 }
 
-export const Card: FC<CardProps> = ({
+export const Card: FC<PropsWithChildren<CardProps>> = ({
   title,
   image,
   imageDescription = "",
@@ -38,7 +38,7 @@ export const Card: FC<CardProps> = ({
       />
       <div className="absolute w-full h-full bg-black opacity-50 pointer-events-none absolute-center"></div>
       <div className="absolute bottom-0 left-0 w-full pointer-events-none opacity-20 bg-gradient-to-t from-black via-black to-transparent h-1/2"></div>
-      <h2 className="relative w-3/4 text-4xl leading-none tracking-tight text-center text-white select-none">
+      <h2 className="relative font-semibold w-3/4 text-4xl leading-none tracking-tight text-center text-white select-none">
         {title}
       </h2>
       {children}

@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { format, parseISO } from "date-fns";
 import readingTime from "reading-time";
 
-import { Fields, Note, Post } from "~/types";
+import { Fields, NoteType, PostType } from "~/types";
 
 const dataDirectory = resolve(process.cwd(), "data");
 const postsDirectory = join(dataDirectory, "posts");
@@ -56,8 +56,8 @@ async function getPostBySlug(
 export async function getPosts(
   slugs: string[],
   fields: Fields[] = []
-): Promise<Post[]> {
-  const posts: Post[] = [];
+): Promise<PostType[]> {
+  const posts: PostType[] = [];
 
   for (const slug of slugs) {
     const post = await getPostBySlug(slug, fields);
@@ -67,7 +67,7 @@ export async function getPosts(
   return posts.sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1));
 }
 
-export async function getAllPosts(fields: Fields[] = []): Promise<Post[]> {
+export async function getAllPosts(fields: Fields[] = []): Promise<PostType[]> {
   const slugs = await getPostSlugs();
   return await getPosts(slugs, fields);
 }
@@ -113,8 +113,8 @@ async function getNoteBySlug(
 export async function getNotes(
   slugs: string[],
   fields: Fields[] = []
-): Promise<Note[]> {
-  const notes: Note[] = [];
+): Promise<NoteType[]> {
+  const notes: NoteType[] = [];
 
   for (const slug of slugs) {
     const note = await getNoteBySlug(slug, fields);
@@ -124,7 +124,7 @@ export async function getNotes(
   return notes.sort((note1, note2) => (note1.dateObj > note2.dateObj ? -1 : 1));
 }
 
-export async function getAllNotes(fields: Fields[] = []): Promise<Note[]> {
+export async function getAllNotes(fields: Fields[] = []): Promise<NoteType[]> {
   const slugs = await getNoteSlugs();
   return await getNotes(slugs, fields);
 }

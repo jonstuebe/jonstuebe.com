@@ -10,8 +10,8 @@ export type Fields =
   | "draft"
   | "blurhash";
 
-export type Post = Record<Fields, string>;
-export type Note = Record<Fields, string>;
+export type PostType = Record<Fields, string>;
+export type NoteType = Record<Fields, string>;
 
 export type TrackType = {
   id: string;

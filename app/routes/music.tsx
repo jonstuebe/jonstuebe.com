@@ -1,26 +1,21 @@
-import {
-  HeadersFunction,
-  HtmlMetaDescriptor,
-  LoaderFunction,
-  MetaFunction,
-} from "remix";
-import { useLoaderData } from "remix";
+import { type MetaFunction, useLoaderData } from "@remix-run/react";
+import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 
-import Layout from "~/components/Layout";
-import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { Header } from "~/components/Header";
 import { Heading } from "~/components/Heading";
+import Layout from "~/components/Layout";
 
-import { TrackType } from "~/types";
 import { PostImage } from "~/components/PostImage";
+import { TrackType } from "~/types";
 
 type LoaderData = {
   topTracks: TrackType[];
   url: string;
 };
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return {} as HtmlMetaDescriptor;
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  if (!data) return [];
 
   const url = new URL(data.url);
 
@@ -28,17 +23,17 @@ export const meta: MetaFunction = ({ data }) => {
   url.searchParams.set("title", "Music");
 
   const title = "Jon Stuebe | Music";
-  return {
-    title,
-    "og:title": title,
-    "og:type": "website",
-    "og:image": url.href,
-    "og:url": data.url,
-    "twitter:card": "summary_large_image",
-    "twitter:creator": "@jonstuebe",
-    "twitter:title": title,
-    "twitter:image": url.href,
-  };
+  return [
+    { title },
+    { property: "og:title", content: title },
+    { property: "og:type", content: "website" },
+    { property: "og:image", content: url.href },
+    { property: "og:url", content: data.url },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:creator", content: "@jonstuebe" },
+    { property: "twitter:title", content: title },
+    { property: "twitter:image", content: url.href },
+  ];
 };
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {

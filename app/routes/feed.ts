@@ -1,5 +1,5 @@
 import { format, parseISO } from "date-fns";
-import { LoaderFunction } from "remix";
+import { LoaderFunction } from "@vercel/remix";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const sanitize = (text: string) => {

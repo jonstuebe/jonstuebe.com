@@ -1,10 +1,27 @@
-/**
- * @type {import('@remix-run/dev/config').AppConfig}
- */
+/** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
-  appDirectory: "app",
-  assetsBuildDirectory: "public/build",
   publicPath: "/build/",
-  serverBuildDirectory: "api/_build",
+  // serverBuildPath: "./api/_build/index.js",
+  serverBuildPath: "api/index.js",
+  assetsBuildDirectory: "public/build",
+  serverMainFields: ["main", "module"],
+  serverModuleFormat: "cjs",
+  serverPlatform: "node",
+  serverMinify: false,
+
+  appDirectory: "app",
   ignoredRouteFiles: [".*"],
+  tailwind: true,
+
+  browserNodeBuiltinsPolyfill: {
+    modules: {
+      url: true,
+      crypto: true,
+      util: true,
+      string_decoder: true,
+      events: true,
+      tls: true,
+      net: true,
+    },
+  },
 };

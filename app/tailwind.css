@@ -1,5 +1,16 @@
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  font-family: "Inter", "system-ui";
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: "Inter var", "system-ui";
+  }
+}
 
 html,
 body {
@@ -40,6 +51,10 @@ body {
 .prose h3:hover a,
 .prose h4:hover a {
   opacity: 1;
+}
+
+.prose.prose--note code {
+  font-size: 0.85rem;
 }
 
 @layer utilities {

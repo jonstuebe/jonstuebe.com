@@ -1,15 +1,19 @@
-import { HtmlMetaDescriptor, Link, useLoaderData } from "remix";
-import type { HeadersFunction, MetaFunction, LoaderFunction } from "remix";
+import { Link, useLoaderData } from "@remix-run/react";
+import type {
+  HeadersFunction,
+  MetaFunction,
+  LoaderFunction,
+} from "@vercel/remix";
 
 import Layout from "~/components/Layout";
 import { Card } from "~/components/Card";
 import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 
-import { Post } from "~/types";
+import { PostType } from "~/types";
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return {} as HtmlMetaDescriptor;
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  if (!data) return [];
 
   const url = new URL(data.url);
 
@@ -20,18 +24,18 @@ export const meta: MetaFunction = ({ data }) => {
   const description =
     "Hi, my name is Jon. Here's some things I've learned recently.";
 
-  return {
-    title,
-    description,
-    "og:title": title,
-    "og:type": "website",
-    "og:image": url.href,
-    "og:url": data.url,
-    "twitter:card": "summary_large_image",
-    "twitter:creator": "@jonstuebe",
-    "twitter:title": title,
-    "twitter:image": url.href,
-  };
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:type", content: "website" },
+    { property: "og:image", content: url.href },
+    { property: "og:url", content: data.url },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:creator", content: "@jonstuebe" },
+    { property: "twitter:title", content: title },
+    { property: "twitter:image", content: url.href },
+  ];
 };
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -81,13 +85,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Posts() {
-  const { posts } = useLoaderData<{ posts: Post[] }>();
+  const { posts } = useLoaderData<{ posts: PostType[] }>();
 
   return (
     <Layout>
       <Header />
       <main>
-        <h1 className="text-5xl lg:text-8xl tracking-tight lg:py-32 py-24 text-center motion-safe:animate-text-in-slow select-none">
+        <h1 className="text-5xl font-bold lg:text-8xl tracking-tight lg:py-32 py-24 text-center motion-safe:animate-text-in-slow select-none">
           Blog
         </h1>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-24">

@@ -8,7 +8,8 @@
     "dev": "node -r dotenv/config node_modules/.bin/remix dev",
     "sync": "npm run token && node -r esbuild-register sync.ts",
     "start": "remix-serve ./api/index.js",
-    "token": "node -r esbuild-register token.ts"
+    "token": "node -r esbuild-register token.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",

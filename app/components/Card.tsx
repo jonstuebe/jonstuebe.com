@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { UnsplashImage } from "./UnplashImage";
 
 export interface CardProps {
@@ -9,7 +9,7 @@ export interface CardProps {
   className?: string;
 }
 
-export const Card: FC<CardProps> = ({
+export const Card: FC<PropsWithChildren<CardProps>> = ({
   title,
   image,
   imageDescription = "",

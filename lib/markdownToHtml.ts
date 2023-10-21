@@ -27,7 +27,6 @@ export default async function markdownToHtml(markdown: string) {
       behavior: "append",
     })
     .use(externalLinks)
-    // @ts-expect-error
     .use(prism, {
       transformInlineCode: true,
     })

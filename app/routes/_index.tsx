@@ -9,7 +9,7 @@ import Layout from "~/components/Layout";
 
 import { PostType } from "~/types";
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
 
   const url = new URL(data.url);

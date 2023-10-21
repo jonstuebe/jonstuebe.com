@@ -8,7 +8,7 @@ import { Note } from "~/components/Note";
 
 import type { NoteType as NoteType } from "~/types";
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
 
   const url = new URL(data.url);

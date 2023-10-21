@@ -8,7 +8,7 @@ import { PostImage } from "~/components/PostImage";
 
 import { type PostType } from "~/types";
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
 
   const { title } = data;

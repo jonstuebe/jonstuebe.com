@@ -1,44 +1,29 @@
+import { type LoaderFunction } from "@vercel/remix";
 import { format, parseISO } from "date-fns";
-import { LoaderFunction } from "@vercel/remix";
-import { getAllPosts } from "../../lib/api";
+
+import { getPosts } from "../utils/hashnode";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const sanitize = (text: string) => {
     return text.replace(/&/g, "&amp;");
   };
 
-  const posts = await getAllPosts([
-    "slug",
-    "title",
-    "date",
-    "dateObj",
-    "image",
-    "readingTime",
-    "summary",
-    "content",
-    "draft",
-    "blurhash",
-  ]);
+  const posts = await getPosts(20);
 
-  const postItems = posts
-    .filter((post) => {
-      return !post.draft ? true : false;
-    })
-    .sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1))
-    .map((post) => {
-      return [
-        `<item>`,
-        `<title>${sanitize(post.title)}</title>`,
-        `<pubDate>${format(
-          parseISO(post.dateObj),
-          "E',' d MMM yyyy"
-        )}</pubDate>`,
-        `<content:encoded><![CDATA[${post.content}]]></content:encoded>`,
-        `<description><![CDATA[<img src="${post.image}" />]]></description>`,
-        `<link>${`https://jonstuebe.com/blog/${post.slug}`}</link>`,
-        `</item>`,
-      ].join("");
-    });
+  const postItems = posts.map((post) => {
+    return [
+      `<item>`,
+      `<title>${sanitize(post.title)}</title>`,
+      `<pubDate>${format(
+        parseISO(post.publishedAt),
+        "E',' d MMM yyyy"
+      )}</pubDate>`,
+      `<content:encoded><![CDATA[${post.content}]]></content:encoded>`,
+      `<description><![CDATA[<img src="${post.coverImage.url}" />]]></description>`,
+      `<link>${`https://jonstuebe.com/blog/${post.slug}`}</link>`,
+      `</item>`,
+    ].join("");
+  });
 
   const rss = [
     `<?xml version="1.0" encoding="UTF-8"?>`,

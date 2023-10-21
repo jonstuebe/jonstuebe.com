@@ -4,7 +4,7 @@ import { json, type HeadersFunction, type LoaderFunction } from "@vercel/remix";
 import tailwindUrl from "~/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
 import { getPuppeteer } from "~/utils/puppeteer";
-import { getPostBySlug } from "../../lib/api";
+import { getPostBySlug } from "../utils/hashnode";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
@@ -24,10 +24,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
     const post = await getPostBySlug(params.slug);
 
-    if (post.draft) {
-      return json({});
-    }
-
     const page = await browser.newPage();
 
     await page.setViewport({
@@ -39,8 +35,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const html = renderToString(
       <SocialCard
         title={post.title}
-        image={post.image}
-        readingTime={post.readingTime}
+        image={post.coverImage.url}
+        readingTime={post.readTimeInMinutes}
       />
     );
 

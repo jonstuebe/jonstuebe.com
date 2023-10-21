@@ -7,8 +7,7 @@ import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 import Layout from "~/components/Layout";
 
-import { PostType } from "~/types";
-import { getRecentPosts } from "../../lib/api";
+import { PostType, getPosts } from "~/utils/hashnode";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -20,7 +19,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   const title = "Home | Jon Stuebe";
   const description =
-    "Hi, my name is Jon. I make apps. I'm an Engineering Manager at SmartRent.";
+    "Hi, I'm Jon. I make apps. I'm work on design systems at SmartRent.";
 
   return [
     { title },
@@ -43,32 +42,16 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getRecentPosts(2, [
-    "slug",
-    "title",
-    "date",
-    "dateObj",
-    "image",
-    "readingTime",
-    "summary",
-    "content",
-    "draft",
-    "blurhash",
-  ]);
+  const posts = await getPosts();
 
   return {
-    posts: posts
-      .filter((post) => {
-        return !post.draft ? true : false;
-      })
-      .sort((post1, post2) => (post1.dateObj > post2.dateObj ? -1 : 1))
-      .slice(0, 2),
+    posts,
     url: request.url,
   };
 };
 
 export default function Index() {
-  const { posts } = useLoaderData<{ posts: PostType[]; url: string }>();
+  const { posts } = useLoaderData<{ posts: PostType[] }>();
 
   useEffect(() => {
     console.clear();
@@ -82,13 +65,13 @@ export default function Index() {
       <Header />
       <main className="pb-24">
         <h2 className="text-2xl font-bold leading-none tracking-normal md:mt-36 mt-24 text-blue-400 text-left mb-3 motion-safe:animate-text-in-quick select-none">
-          Hi, my name is Jon
+          Hi, I'm Jon
         </h2>
         <h1 className="text-7xl leading-none font-extrabold tracking-tight mt-0 mb-4 text-left motion-safe:animate-text-in select-none">
           I make apps
         </h1>
-        <h2 className="text-2xl tracking-tight m-0 text-left max-w-2xl motion-safe:animate-text-in-slow select-none">
-          I'm an Engineering Manager at
+        <h2 className="text-2xl font-semibold tracking-tight m-0 text-left max-w-2xl motion-safe:animate-text-in-slow select-none">
+          I work on design systems at
           <a
             href="https://smartrent.com"
             target="_blank"
@@ -127,16 +110,15 @@ export default function Index() {
                   key={key}
                 >
                   <Card
-                    image={post.image}
+                    image={post.coverImage.url}
                     title={post.title}
-                    blurhash={post.blurhash}
                     className="motion-safe:animate-fade-in"
                   >
                     <h3 className="absolute m-0 p-0 font-semibold text-white opacity-80 text-base bottom-4 left-4">
-                      {post.date}
+                      {post.publishedAt}
                     </h3>
                     <h3 className="absolute m-0 p-0 font-semibold text-white opacity-80 text-base bottom-4 right-4">
-                      {post.readingTime}
+                      {post.readTimeInMinutes} minutes
                     </h3>
                   </Card>
                 </Link>

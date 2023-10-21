@@ -16,17 +16,17 @@ export function Header() {
         </Link>
         <Link
           className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
-          to="/notes"
-          prefetch="render"
-        >
-          notes
-        </Link>
-        <Link
-          className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
           to="/uses"
           prefetch="render"
         >
           uses
+        </Link>
+        <Link
+          className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
+          to="/apps/quench"
+          prefetch="render"
+        >
+          quench
         </Link>
       </nav>
     </header>

@@ -26,11 +26,15 @@ function addPostMetadata(post: PostType) {
 }
 
 async function gql<TType>(query: string) {
+  if (!process.env.HASHNODE_SECRET) {
+    throw new Error("process.env.HASHNODE_SECRET missing");
+  }
+
   const data = await fetch("https://gql.hashnode.com", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: ***REMOVED***,
+      Authorization: process.env.HASHNODE_SECRET,
     },
     body: JSON.stringify({
       query,

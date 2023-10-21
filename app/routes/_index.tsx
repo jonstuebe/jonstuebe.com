@@ -35,9 +35,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   ];
 };
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
+export const headers: HeadersFunction = () => {
   return {
-    "Cache-Control": loaderHeaders.get("Cache-Control") ?? "max-age=600",
+    "Cache-Control": "max-age=600",
   };
 };
 

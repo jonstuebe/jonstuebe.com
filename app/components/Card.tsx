@@ -1,10 +1,13 @@
 import { FC, PropsWithChildren } from "react";
 
+import ParallaxCard from "./ParallaxCard";
+
 export interface CardProps {
   title: string;
   image: string;
   imageDescription?: string;
   className?: string;
+  parallax?: boolean;
 }
 
 export const Card: FC<PropsWithChildren<CardProps>> = ({
@@ -13,7 +16,21 @@ export const Card: FC<PropsWithChildren<CardProps>> = ({
   imageDescription = "",
   className = "",
   children,
+  parallax = true,
 }) => {
+  if (parallax) {
+    return (
+      <ParallaxCard
+        className={className}
+        imageUrl={image}
+        title={title}
+        description={imageDescription}
+      >
+        {children}
+      </ParallaxCard>
+    );
+  }
+
   return (
     <div
       className={

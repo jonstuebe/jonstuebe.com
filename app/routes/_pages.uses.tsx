@@ -26,15 +26,19 @@ export const links: LinksFunction = () => {
 export const loader: LoaderFunction = ({ request }) => {
   const apps: App[] = [
     {
-      name: "Airfoil",
-      url: "https://rogueamoeba.com/airfoil/mac/",
-      description:
-        "for playing music throughout my house w/ proper audio syncing.",
-    },
-    {
       name: "Raycast",
       url: "https://www.raycast.com/",
       description: "for launching everything...quickly.",
+    },
+    {
+      name: "Screen Studio",
+      url: "https://www.screen.studio/",
+      description: "create high quality videos as easy as taking a screenshot.",
+    },
+    {
+      name: "Obsidian",
+      url: "https://obsidian.md/",
+      description: "writing app that I use as a second brain to store notes",
     },
     {
       name: "Bartender",
@@ -66,11 +70,6 @@ export const loader: LoaderFunction = ({ request }) => {
       name: "Postico",
       url: "https://eggerapps.at/postico/",
       description: "for browsing and navigating around Postgres db's.",
-    },
-    {
-      name: "Rocket",
-      url: "http://matthewpalmer.net/rocket/",
-      description: "for picking emoji's slack style but OS wide.",
     },
     {
       name: "SoundSource",
@@ -182,7 +181,7 @@ export default function UsesPage() {
                 <a
                   href={app.url}
                   target="_blank"
-                  className="block no-underline rounded-md bg-slate-900 opacity-80 hover:opacity-100 p-4"
+                  className="transform transition-transform duration-300 hover:scale-105 block no-underline rounded-md bg-slate-900 opacity-80 hover:opacity-100 p-4"
                   key={idx}
                 >
                   <h3 className="p-0 m-0 mb-2 font-bold text-gray-300 text-xl">
@@ -204,7 +203,7 @@ export default function UsesPage() {
             <a
               href="https://code.visualstudio.com/"
               target="_blank"
-              className="relative rounded-md w-full overflow-hidden h-40 no-underline text-gray-400 hover:text-gray-200"
+              className="transform transition-transform duration-300 hover:scale-105 relative rounded-md w-full overflow-hidden h-40 no-underline text-gray-400 hover:text-gray-200"
             >
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <img
@@ -226,7 +225,7 @@ export default function UsesPage() {
                   <a
                     href={extension.url}
                     target="_blank"
-                    className="block no-underline rounded-md bg-slate-900 opacity-80 hover:opacity-100 p-4"
+                    className="transform transition-transform duration-300 hover:scale-105 block no-underline rounded-md bg-slate-900 opacity-80 hover:opacity-100 p-4"
                     key={idx}
                   >
                     <h3 className="p-0 m-0 font-bold text-gray-300 text-sm">
@@ -244,7 +243,7 @@ export default function UsesPage() {
           <a
             href="https://github.com/tonsky/FiraCode"
             target="_blank"
-            className="py-12 block no-underline rounded-md bg-slate-900 text-gray-200"
+            className="transform transition-transform duration-300 hover:scale-105 py-12 block no-underline rounded-md bg-slate-900 text-gray-200"
           >
             <h5 className="font-family-fira no-underline m-0 mb-4 text-center text-4xl">
               Fira Code

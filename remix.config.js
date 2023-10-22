@@ -12,6 +12,7 @@ module.exports = {
   appDirectory: "app",
   ignoredRouteFiles: [".*"],
   tailwind: true,
+  postcss: true,
 
   browserNodeBuiltinsPolyfill: {
     modules: {

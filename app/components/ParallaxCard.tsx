@@ -51,7 +51,7 @@ const ParallaxCard: React.FC<PropsWithChildren<ParallaxCardProps>> = ({
     <div
       ref={cardRef}
       className={
-        "rounded-md bg-gray-800 md:h-64 sm:h-80 h-64 border border-solid border-gray-700 hover:shadow-sm motion-safe:transition motion-safe:transform overflow-hidden relative flex items-center justify-center" +
+        "rounded-md select-none bg-gray-800 md:h-64 sm:h-80 h-64 border border-solid border-gray-700 hover:shadow-sm motion-safe:transition motion-safe:transform overflow-hidden relative flex items-center justify-center" +
         " " +
         (className || "")
       }
@@ -62,7 +62,9 @@ const ParallaxCard: React.FC<PropsWithChildren<ParallaxCardProps>> = ({
         <img
           src={imageUrl}
           alt={description}
-          className={"absolute w-full h-full absolute-center object-fit"}
+          className={
+            "absolute pointer-events-none w-full h-full absolute-center object-fit"
+          }
           decoding="async"
         />
       </div>
@@ -73,18 +75,6 @@ const ParallaxCard: React.FC<PropsWithChildren<ParallaxCardProps>> = ({
         {title}
       </h2>
       {children}
-      {/* <div
-        style={{
-          position: "absolute",
-          bottom: "0",
-          padding: "20px",
-          background: "rgba(0, 0, 0, 0.5)",
-          color: "white",
-          width: "100%",
-        }}
-      >
-        <p>{description}</p>
-      </div> */}
     </div>
   );
 };

@@ -14,7 +14,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   const url = new URL(data.url);
 
-  url.pathname = "social.jpg";
+  url.pathname = "social.png";
   url.searchParams.set("title", "jonstuebe.com");
 
   const title = "Home | Jon Stuebe";

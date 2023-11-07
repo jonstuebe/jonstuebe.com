@@ -15,7 +15,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const url = data.url as string;
   const socialImage = url.endsWith("/")
     ? url.slice(0, -1)
-    : url + "/social.jpg";
+    : url + "/social.png";
 
   return [
     { title },

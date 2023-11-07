@@ -13,6 +13,7 @@ module.exports = {
   ignoredRouteFiles: [".*"],
   tailwind: true,
   postcss: true,
+  serverDependenciesToBundle: [/^@?shiki.*/],
 
   browserNodeBuiltinsPolyfill: {
     modules: {

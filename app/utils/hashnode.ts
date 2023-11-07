@@ -1,4 +1,5 @@
 import { format, parseISO } from "date-fns";
+import fs from "fs/promises";
 import type { Options as RehypeCodeOptions } from "rehype-pretty-code";
 import path from "path";
 
@@ -35,14 +36,27 @@ async function addPostMetadata(post: PostType) {
   const rehypeStringify = (await import("rehype-stringify")).default;
   const rehypePrettyCode = (await import("rehype-pretty-code")).default;
 
+  const getShikiPath = (): string => {
+    return path.join(process.cwd(), "public");
+  };
+  const touched = { current: false };
+
+  const touchShikiPath = (): void => {
+    if (touched.current) return;
+    fs.readdir(getShikiPath());
+    touched.current = true;
+  };
+
   const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (
     options
   ) => {
+    touchShikiPath();
+
     const highlighter = await shiki.getHighlighter({
       ...(options as any),
       paths: {
-        languages: path.join(process.cwd(), "public", "/languages"),
-        themes: path.join(process.cwd(), "public", "/themes"),
+        languages: path.join(getShikiPath(), "/languages"),
+        themes: path.join(getShikiPath(), "/themes"),
       },
     });
 

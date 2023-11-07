@@ -24,10 +24,33 @@ export function formatReadingTime(readTimeInMinutes: number) {
     : `${readTimeInMinutes} minute`;
 }
 
-function addPostMetadata(post: PostType) {
+async function addPostMetadata(post: PostType) {
+  const unified = (await import("unified")).unified;
+  const remarkRehype = (await import("remark-rehype")).default;
+  const remarkParse = (await import("remark-parse")).default;
+  const remarkGfm = (await import("remark-gfm")).default;
+  const rehypeStringify = (await import("rehype-stringify")).default;
+  const rehypePrettyCode = (await import("rehype-pretty-code")).default;
+
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype)
+    // @ts-expect-error
+    .use(rehypePrettyCode, {
+      theme: "one-dark-pro",
+      keepBackground: false,
+    })
+    .use(rehypeStringify)
+    .process(post.content.markdown);
+
   return {
     ...post,
     publishedAt: format(parseISO(post.publishedAt), "PPP"),
+    content: {
+      ...post.content,
+      html: file.value.toString(),
+    },
   };
 }
 
@@ -77,15 +100,19 @@ export async function getPosts(count = 2, after?: string): Promise<PostType[]> {
             }
             content {
               markdown
-              html
             }
           }
         }
       }
     }
   }`);
+  const posts: PostType[] = [];
 
-  return data.publication.posts.edges.map((edge) => addPostMetadata(edge.node));
+  for (const edge of data.publication.posts.edges) {
+    posts.push(await addPostMetadata(edge.node));
+  }
+
+  return posts;
 }
 
 export async function getPostBySlug(slug: string): Promise<PostType> {
@@ -109,11 +136,10 @@ export async function getPostBySlug(slug: string): Promise<PostType> {
         }              
         content {
           markdown
-          html
         }
       }
     }
   }`);
 
-  return addPostMetadata(data.publication.post);
+  return await addPostMetadata(data.publication.post);
 }

@@ -1,5 +1,5 @@
 import { MetaFunction, useLoaderData } from "@remix-run/react";
-import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "@vercel/remix";
 
 import Layout from "~/components/Layout";
 import { Footer } from "~/components/Footer";

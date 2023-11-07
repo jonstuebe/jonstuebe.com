@@ -86,8 +86,7 @@ export default {
             },
             code: {
               color: theme("colors.gray.300"),
-              padding: theme("spacing.1"),
-              fontSize: rem(18),
+              fontSize: rem(16),
             },
             "code::before": {
               content: "",

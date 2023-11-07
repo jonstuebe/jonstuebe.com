@@ -12,6 +12,7 @@
   "dependencies": {
     "@remix-run/react": "^2.1.0",
     "@remix-run/serve": "^2.1.0",
+    "@resvg/resvg-js": "^2.6.0",
     "@tailwindcss/typography": "^0.5.0",
     "@vercel/analytics": "^1.1.1",
     "@vercel/remix": "^2.1.0",
@@ -23,10 +24,10 @@
     "fprint": "^2.0.1",
     "inter-ui": "^3.19.3",
     "postcss": "^8.4.5",
-    "puppeteer-core": "^13.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix": "^2.1.0",
+    "satori": "^0.10.9",
     "tailwindcss": "^3.3.3",
     "tailwindcss-scrollbar": "^0.1.0",
     "tiny-invariant": "^1.2.0"
@@ -35,7 +36,6 @@
     "@remix-run/dev": "^2.1.0",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
-    "puppeteer": "^13.0.1",
     "typescript": "^4.1.2"
   },
   "sideEffects": false

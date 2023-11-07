@@ -1,9 +1,9 @@
-import { renderToString } from "react-dom/server";
 import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
+import satori from "satori";
+import { Resvg } from "@resvg/resvg-js";
 
-import tailwindUrl from "~/tailwind.css";
 import { SocialCard } from "~/components/SocialCard";
-import { getPuppeteer } from "~/utils/puppeteer";
+import { getFont } from "../utils/social";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
@@ -18,35 +18,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const image = url.searchParams.has("image")
       ? (url.searchParams.get("image") as string)
       : undefined;
-    const { browser } = await getPuppeteer();
 
-    const page = await browser.newPage();
+    const jsx = <SocialCard title={title} image={image} />;
 
-    await page.setViewport({
+    const svg = await satori(jsx, {
       width: 2400,
       height: 1256,
-      deviceScaleFactor: 1,
+      fonts: await getFont("Inter"),
     });
 
-    const html = renderToString(<SocialCard title={title} image={image} />);
+    const resvg = new Resvg(svg);
+    const pngData = resvg.render();
+    const data = pngData.asPng();
 
-    const { origin } = new URL(request.url);
-
-    const css = origin + tailwindUrl;
-
-    await page.setContent(
-      `<html class="font-sans"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet" /><link href="${css}" rel="stylesheet" /></head><body>${html}</body></html>`,
-      {
-        waitUntil: "networkidle0",
-      }
-    );
-
-    const screenshot = await page.screenshot({ type: "jpeg", quality: 80 });
-    await browser.close();
-
-    return new Response(screenshot, {
+    return new Response(data, {
       headers: {
-        "Content-Type": "image/jpeg",
+        "Content-Type": "image/png",
       },
     });
   } catch (e: any) {

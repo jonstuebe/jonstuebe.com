@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns";
 import type { Options as RehypeCodeOptions } from "rehype-pretty-code";
+import path from "path";
 
 export interface PostType {
   title: string;
@@ -40,8 +41,8 @@ async function addPostMetadata(post: PostType) {
     const highlighter = await shiki.getHighlighter({
       ...(options as any),
       paths: {
-        languages: "/languages",
-        themes: "/themes",
+        languages: path.join(process.cwd(), "public", "/languages"),
+        themes: path.join(process.cwd(), "public", "/themes"),
       },
     });
 

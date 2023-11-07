@@ -1,4 +1,5 @@
 import { format, parseISO } from "date-fns";
+import type { Options as RehypeCodeOptions } from "rehype-pretty-code";
 
 export interface PostType {
   title: string;
@@ -25,12 +26,27 @@ export function formatReadingTime(readTimeInMinutes: number) {
 }
 
 async function addPostMetadata(post: PostType) {
+  const shiki = await import("shiki");
   const unified = (await import("unified")).unified;
   const remarkRehype = (await import("remark-rehype")).default;
   const remarkParse = (await import("remark-parse")).default;
   const remarkGfm = (await import("remark-gfm")).default;
   const rehypeStringify = (await import("rehype-stringify")).default;
   const rehypePrettyCode = (await import("rehype-pretty-code")).default;
+
+  const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (
+    options
+  ) => {
+    const highlighter = await shiki.getHighlighter({
+      ...(options as any),
+      paths: {
+        languages: "/languages",
+        themes: "/themes",
+      },
+    });
+
+    return highlighter;
+  };
 
   const file = await unified()
     .use(remarkParse)
@@ -40,6 +56,7 @@ async function addPostMetadata(post: PostType) {
     .use(rehypePrettyCode, {
       theme: "one-dark-pro",
       keepBackground: false,
+      getHighlighter,
     })
     .use(rehypeStringify)
     .process(post.content.markdown);

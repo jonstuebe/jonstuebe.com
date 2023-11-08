@@ -2,6 +2,9 @@ import { type LoaderFunction } from "@vercel/remix";
 import { format, parseISO } from "date-fns";
 
 import { getPosts } from "../utils/hashnode";
+import { createCacheHeader } from "../utils/cache";
+
+export const headers = createCacheHeader({ stale: "1day" });
 
 export const loader: LoaderFunction = async ({ params }) => {
   const sanitize = (text: string) => {

@@ -1,4 +1,7 @@
 import { Link } from "@remix-run/react";
+import { createCacheHeader } from "../utils/cache";
+
+export const headers = createCacheHeader({ stale: "1month" });
 
 export default function Quench() {
   return (

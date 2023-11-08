@@ -1,16 +1,13 @@
-import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "@vercel/remix";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 
 import { SocialCard } from "~/components/SocialCard";
 import { formatReadingTime, getPostBySlug } from "../utils/hashnode";
 import { getFont } from "../utils/social";
+import { createCacheHeader } from "../utils/cache";
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
-  return {
-    "Cache-Control": loaderHeaders.get("Cache-Control") ?? "max-age=604800",
-  };
-};
+export const headers = createCacheHeader({ stale: "1day" });
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   if (!params.slug) {

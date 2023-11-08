@@ -7,6 +7,9 @@ import { Header } from "~/components/Header";
 import { PostImage } from "~/components/PostImage";
 
 import { formatReadingTime, getPostBySlug } from "../utils/hashnode";
+import { createCacheHeader } from "../utils/cache";
+
+export const headers = createCacheHeader();
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];

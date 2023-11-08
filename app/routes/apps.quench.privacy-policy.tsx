@@ -1,3 +1,7 @@
+import { createCacheHeader } from "../utils/cache";
+
+export const headers = createCacheHeader({ stale: "1month" });
+
 export default function PrivacyPolicy() {
   return (
     <div className="flex flex-col p-4 mb-4 flex-1 m-auto relative prose">

@@ -2,6 +2,7 @@ import { useLoaderData } from "@remix-run/react";
 import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 
 import { Heading } from "~/components/Heading";
+import { createCacheHeader } from "../utils/cache";
 
 type App = {
   name: string;
@@ -13,6 +14,8 @@ type Extension = {
   name: string;
   url: string;
 };
+
+export const headers = createCacheHeader({ stale: "1week" });
 
 export const links: LinksFunction = () => {
   return [

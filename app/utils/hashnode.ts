@@ -1,7 +1,4 @@
 import { format, parseISO } from "date-fns";
-import fs from "fs/promises";
-import type { Options as RehypeCodeOptions } from "rehype-pretty-code";
-import path from "path";
 
 export interface PostType {
   title: string;
@@ -28,50 +25,19 @@ export function formatReadingTime(readTimeInMinutes: number) {
 }
 
 async function addPostMetadata(post: PostType) {
-  const shiki = await import("shiki");
   const unified = (await import("unified")).unified;
   const remarkRehype = (await import("remark-rehype")).default;
   const remarkParse = (await import("remark-parse")).default;
   const remarkGfm = (await import("remark-gfm")).default;
   const rehypeStringify = (await import("rehype-stringify")).default;
-  const rehypePrettyCode = (await import("rehype-pretty-code")).default;
-
-  const getShikiPath = (): string => {
-    return path.join(process.cwd(), "shiki");
-  };
-  const touched = { current: false };
-
-  const touchShikiPath = (): void => {
-    if (touched.current) return;
-    fs.readdir(getShikiPath());
-    touched.current = true;
-  };
-
-  const getHighlighter: RehypeCodeOptions["getHighlighter"] = async (
-    options
-  ) => {
-    touchShikiPath();
-
-    const highlighter = await shiki.getHighlighter({
-      ...(options as any),
-      paths: {
-        languages: path.join(getShikiPath(), "/languages"),
-        themes: path.join(getShikiPath(), "/themes"),
-      },
-    });
-
-    return highlighter;
-  };
+  const rehypeShikiji = (await import("rehype-shikiji")).default;
 
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
-    // @ts-expect-error
-    .use(rehypePrettyCode, {
+    .use(rehypeShikiji, {
       theme: "one-dark-pro",
-      keepBackground: false,
-      getHighlighter,
     })
     .use(rehypeStringify)
     .process(post.content.markdown);

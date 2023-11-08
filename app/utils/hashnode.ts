@@ -30,16 +30,14 @@ async function addPostMetadata(post: PostType) {
   const remarkParse = (await import("remark-parse")).default;
   const remarkGfm = (await import("remark-gfm")).default;
   const rehypeStringify = (await import("rehype-stringify")).default;
-  const rehypePrettyCode = (await import("rehype-pretty-code")).default;
+  const rehypeShikiji = (await import("rehype-shikiji")).default;
 
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
-    // @ts-expect-error
-    .use(rehypePrettyCode, {
+    .use(rehypeShikiji, {
       theme: "one-dark-pro",
-      keepBackground: false,
     })
     .use(rehypeStringify)
     .process(post.content.markdown);
@@ -49,7 +47,10 @@ async function addPostMetadata(post: PostType) {
     publishedAt: format(parseISO(post.publishedAt), "PPP"),
     content: {
       ...post.content,
-      html: file.value.toString(),
+      // hacky hacky
+      html: file.value
+        .toString()
+        .replace(/<span class="line"><\/span><\/code>/g, "</code>"),
     },
   };
 }

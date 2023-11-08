@@ -1,3 +1,7 @@
+import { createCacheHeader } from "../utils/cache";
+
+export const headers = createCacheHeader({ stale: "1month" });
+
 export default function Support() {
   return (
     <iframe

@@ -24,6 +24,7 @@
     "fprint": "^2.0.1",
     "inter-ui": "^3.19.3",
     "postcss": "^8.4.5",
+    "pretty-cache-header": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rehype-shikiji": "^0.6.12",

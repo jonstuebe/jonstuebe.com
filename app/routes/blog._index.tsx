@@ -1,15 +1,12 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import type {
-  HeadersFunction,
-  MetaFunction,
-  LoaderFunction,
-} from "@vercel/remix";
+import type { MetaFunction, LoaderFunction } from "@vercel/remix";
 
 import Layout from "~/components/Layout";
 import { Card } from "~/components/Card";
 import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 import { PostType, formatReadingTime, getPosts } from "../utils/hashnode";
+import { createCacheHeader } from "../utils/cache";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) return [];
@@ -35,6 +32,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { property: "twitter:image", content: url.href },
   ];
 };
+
+export const headers = createCacheHeader();
 
 export const loader: LoaderFunction = async ({ request }) => {
   const posts = await getPosts(20);

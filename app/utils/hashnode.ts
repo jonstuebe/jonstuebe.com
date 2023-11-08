@@ -47,7 +47,10 @@ async function addPostMetadata(post: PostType) {
     publishedAt: format(parseISO(post.publishedAt), "PPP"),
     content: {
       ...post.content,
-      html: file.value.toString(),
+      // hacky hacky
+      html: file.value
+        .toString()
+        .replace(/<span class="line"><\/span><\/code>/g, "</code>"),
     },
   };
 }

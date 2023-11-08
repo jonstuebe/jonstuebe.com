@@ -25,10 +25,18 @@ type TimeString = `${number}${TimeUnit}` | `${number} ${TimeUnit}`;
  */
 export const createCacheHeader = (
   { stale }: { stale?: TimeString } = { stale: "10mins" }
-): Headers | HeadersInit => ({
-  "Cache-Control": cacheHeader({
-    public: true,
-    maxAge: stale,
-    staleWhileRevalidate: stale,
-  }),
-});
+): Headers | HeadersInit => {
+  if (process.env.NODE_ENV === "development") {
+    return {
+      "Cache-Control": "no-cache",
+    };
+  }
+
+  return {
+    "Cache-Control": cacheHeader({
+      public: true,
+      maxAge: stale,
+      staleWhileRevalidate: stale,
+    }),
+  };
+};

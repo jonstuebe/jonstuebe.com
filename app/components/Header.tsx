@@ -28,6 +28,13 @@ export function Header() {
         >
           quench
         </Link>
+        <Link
+          className="text-base text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium no-underline select-none"
+          to="/apps/grow"
+          prefetch="render"
+        >
+          grow
+        </Link>
       </nav>
     </header>
   );

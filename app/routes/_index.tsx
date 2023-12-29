@@ -1,6 +1,6 @@
+import { Link, useLoaderData, type MetaFunction } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { useEffect } from "react";
-import { Link, type MetaFunction, useLoaderData } from "@remix-run/react";
-import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 
 import { Card } from "~/components/Card";
 import { Footer } from "~/components/Footer";

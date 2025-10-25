@@ -14,9 +14,9 @@ import { cn } from "./lib/utils";
 
 function App() {
   return (
-    <div className="flex flex-col h-screen pt-4 pl-4 pr-4">
+    <div className="flex flex-col h-[100svh] pt-2 md:pt-4 pl-2 md:pl-4 pr-2 md:pr-4">
       <div className="flex flex-row items-center justify-between">
-        <h3 className="text-2xl font-semibold tracking-tight text-foreground">
+        <h3 className="text-lg leading-1 md:text-2xl font-semibold tracking-tight text-foreground">
           jon
           <span className="text-accent-foreground/70">stuebe</span>
         </h3>
@@ -37,7 +37,7 @@ function App() {
           </a>
         </div>
       </div>
-      <div className="flex flex-col h-screen p-4 w-full max-w-2xl mx-auto">
+      <div className="flex flex-1 flex-col p-4 w-full max-w-full md:max-w-2xl mx-auto">
         <div className="flex-1 flex flex-col justify-center">
           <div className="flex flex-col gap-2 py-12">
             <h2 className="text-left text-2xl tracking-tighter text-foreground">

@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript", "unicorn", "react", "jsx-a11y"],
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "rules": {
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "import/no-cycle": "error",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "html": false
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.ts", "*.spec.ts", "*.test.tsx", "*.spec.tsx"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
+}

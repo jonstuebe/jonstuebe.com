@@ -1,4 +1,5 @@
 import invitationhomesLogo from "@/assets/invitationhomes.svg";
+import confidentialLogo from "@/assets/confidential.svg";
 import creonesourceLogo from "@/assets/onesource.webp";
 import smartrentLogo from "@/assets/smartrent.svg";
 import {
@@ -50,14 +51,7 @@ function App() {
             </h1>
             <p>
               I'm currently working at{" "}
-              <a
-                href="https://creonesource.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent-foreground/70 hover:text-accent-foreground"
-              >
-                CRE Onesource
-              </a>{" "}
+              <span className="text-accent-foreground/70">Confidential</span>{" "}
               as a Software Engineer.
             </p>
             <div
@@ -71,11 +65,21 @@ function App() {
             >
               <Tooltip>
                 <TooltipTrigger asChild>
+                  <span className="app cursor-default">
+                    <img src={confidentialLogo} alt="" />
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  Current role — employer details confidential
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <a
                     href="https://creonesource.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="app"
+                    className="app grayscale-100 hover:grayscale-0"
                   >
                     <img src={creonesourceLogo} alt="CRE OneSource" />
                   </a>

@@ -1,5 +1,5 @@
 import invitationhomesLogo from "@/assets/invitationhomes.svg";
-import confidentialLogo from "@/assets/confidential.svg";
+import oneravenLogo from "@/assets/oneraven.svg";
 import creonesourceLogo from "@/assets/onesource.webp";
 import smartrentLogo from "@/assets/smartrent.svg";
 import {
@@ -51,8 +51,8 @@ function App() {
             </h1>
             <p>
               I'm currently working at{" "}
-              <span className="text-accent-foreground/70">Confidential</span>{" "}
-              as a Software Engineer.
+              <span className="text-accent-foreground/70">One Raven</span> as
+              VP of Software Engineering.
             </p>
             <div
               className={cn(
@@ -65,12 +65,17 @@ function App() {
             >
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="app cursor-default">
-                    <img src={confidentialLogo} alt="" />
-                  </span>
+                  <a
+                    href="https://oneraven.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="app"
+                  >
+                    <img src={oneravenLogo} alt="One Raven" />
+                  </a>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">
-                  Current role — employer details confidential
+                  Building local first smarthome
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
@@ -85,7 +90,7 @@ function App() {
                   </a>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">
-                  Currently building the core platform for CRE Onesource
+                  Built software for CRE OneSource
                 </TooltipContent>
               </Tooltip>
               <Tooltip>

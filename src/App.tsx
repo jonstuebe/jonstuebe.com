@@ -60,7 +60,7 @@ function App() {
             <p>
               I'm currently working at{" "}
               <span className="text-accent-foreground/70">One Raven</span> as
-              VP of Software Engineering.
+              VP of Software.
             </p>
             <div
               className={cn(

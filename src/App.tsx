@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./components/ui/tooltip";
+import { TwitterIcon } from "./components/twitter-icon";
 import { cn } from "./lib/utils";
 
 function App() {
@@ -35,6 +36,13 @@ function App() {
             rel="noopener noreferrer"
           >
             <BlueskyIcon className="size-6 text-foreground/70 hover:text-foreground transition-colors duration-300" />
+          </a>
+          <a
+            href="https://twitter.com/jonstuebe"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <TwitterIcon className="size-6 text-foreground/70 hover:text-foreground transition-colors duration-300" />
           </a>
         </div>
       </div>

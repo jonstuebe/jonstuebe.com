@@ -3,7 +3,6 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-  type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
@@ -457,14 +456,12 @@ export function Games() {
                   data-id={g.id}
                   draggable={false}
                 >
-                  <span
+                  <img
                     className="games-icon"
-                    style={{ "--c1": g.c1, "--c2": g.c2 } as CSSProperties}
-                  >
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      {g.glyph}
-                    </svg>
-                  </span>
+                    src={g.icon}
+                    alt=""
+                    draggable={false}
+                  />
                   <span className="games-label">{g.name}</span>
                 </a>
               );

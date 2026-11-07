@@ -1,0 +1,124 @@
+/* Springboard-style icon grid for /games */
+.games-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 26px;
+  column-gap: 8px;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+@media (min-width: 560px) {
+  .games-grid {
+    grid-template-columns: repeat(6, 1fr);
+    row-gap: 32px;
+  }
+}
+
+.games-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--muted-foreground);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 18px;
+  padding: 4px 0;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.games-app:hover {
+  color: var(--foreground);
+}
+.games-app:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.games-icon {
+  --size: 64px;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 23%;
+  object-fit: cover;
+  /* Hairline so light icons (e.g. Origin) still read on a light page. */
+  box-shadow: 0 0 0 1px var(--border);
+  pointer-events: none;
+  -webkit-user-drag: none;
+  transition: transform 0.15s ease;
+}
+@media (min-width: 560px) {
+  .games-icon {
+    --size: 76px;
+  }
+}
+
+.games-label {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.games-app:active .games-icon {
+  transform: scale(0.94);
+}
+
+/* Edit mode */
+.games-editing .games-app {
+  touch-action: none;
+  cursor: grab;
+}
+.games-editing .games-icon {
+  animation: games-jiggle 0.26s ease-in-out infinite alternate;
+}
+.games-editing .games-app:nth-child(3n + 1) .games-icon {
+  animation-delay: -0.09s;
+  animation-duration: 0.24s;
+}
+.games-editing .games-app:nth-child(3n + 2) .games-icon {
+  animation-delay: -0.17s;
+  animation-duration: 0.28s;
+}
+@keyframes games-jiggle {
+  from {
+    transform: rotate(-1.8deg);
+  }
+  to {
+    transform: rotate(1.8deg);
+  }
+}
+.games-app.dragging {
+  z-index: 10;
+  transition: none;
+  cursor: grabbing;
+}
+.games-app.dragging .games-icon {
+  animation: none;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 18px 34px -10px rgba(0, 0, 0, 0.6);
+}
+.games-app.dragging .games-label {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .games-editing .games-icon {
+    animation: none;
+    outline: 1px dashed var(--muted-foreground);
+    outline-offset: 4px;
+  }
+  .games-app,
+  .games-icon {
+    transition: none;
+  }
+}

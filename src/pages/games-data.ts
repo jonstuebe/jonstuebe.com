@@ -2,6 +2,7 @@ import chainIcon from "@/assets/games/chain.png";
 import closecallIcon from "@/assets/games/closecall.png";
 import originIcon from "@/assets/games/origin.png";
 import plotlineIcon from "@/assets/games/plotline.png";
+import sudokuIcon from "@/assets/games/sudoku.png";
 import timestackIcon from "@/assets/games/timestack.png";
 import trashIcon from "@/assets/games/trash.svg";
 import triviaIcon from "@/assets/games/trivia.png";
@@ -65,5 +66,11 @@ export const GAMES: Game[] = [
     name: "Origin",
     href: "https://origin.jonstuebe.com/",
     icon: originIcon,
+  },
+  {
+    id: "sudoku",
+    name: "Sudoku",
+    href: "https://sudoku.jonstuebe.com/",
+    icon: sudokuIcon,
   },
 ];

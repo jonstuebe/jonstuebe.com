@@ -1,5 +1,6 @@
 import chainIcon from "@/assets/games/chain.png";
 import closecallIcon from "@/assets/games/closecall.png";
+import dessertDropIcon from "@/assets/games/dessert-drop.png";
 import originIcon from "@/assets/games/origin.png";
 import plotlineIcon from "@/assets/games/plotline.png";
 import sudokuIcon from "@/assets/games/sudoku.png";
@@ -72,5 +73,11 @@ export const GAMES: Game[] = [
     name: "Sudoku",
     href: "https://sudoku.jonstuebe.com/",
     icon: sudokuIcon,
+  },
+  {
+    id: "dessert-drop",
+    name: "Dessert Drop",
+    href: "https://dessert-drop.jonstuebe.com/",
+    icon: dessertDropIcon,
   },
 ];
